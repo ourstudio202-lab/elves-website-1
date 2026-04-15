@@ -1,124 +1,17 @@
-/* 1. Setup & Variables */
-:root {
-    --primary-color: #2d3436;   /* Deep Charcoal */
-    --accent-color: #00b894;    /* Magical Mint Green */
-    --text-color: #636e72;
-    --light-bg: #f9f9f9;
-}
-
+/* RESET */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: var(--primary-color);
-    background-color: #fff;
+    font-family: Arial, sans-serif;
+    color: #111;
+    background: #fff;
 }
 
-/* 2. Navigation */
-header {
-    padding: 1.5rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #eee;
-}
-
-.logo {
-    font-weight: 800;
-    font-size: 1.5rem;
-    letter-spacing: -1px;
-    color: var(--primary-color);
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 30px;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-nav a:hover, nav a.active {
-    color: var(--accent-color);
-}
-
-/* 3. Main Content & Hero */
-main {
-    padding: 80px 5%;
-    max-width: 1100px;
-    margin: 0 auto;
-    min-height: 70vh;
-}
-
-.hero {
-    text-align: center;
-    padding: 60px 0;
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 20px;
-}
-
-.btn {
-    display: inline-block;
-    background: var(--accent-color);
-    color: white;
-    padding: 12px 30px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    font-weight: 600;
-}
-
-/* 4. Portfolio Grid (Work Page) */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-}
-
-.project-card {
-    background: var(--light-bg);
-    padding: 40px;
-    border-radius: 10px;
-    border: 1px solid #eee;
-}
-
-/* 5. Contact Form */
-form {
-    max-width: 500px;
-    margin-top: 30px;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-/* 6. Footer */
-footer {
-    text-align: center;
-    padding: 40px;
-    background: var(--light-bg);
-    color: var(--text-color);
-    font-size: 0.9rem;
-}
-/* --- Header --- */
+/* HEADER */
 .site-header {
     position: fixed;
     top: 0;
@@ -135,27 +28,21 @@ footer {
     font-size: 1.4rem;
     font-weight: 600;
     color: #111;
-    letter-spacing: -0.5px;
-    transition: color 0.3s ease;
 }
 
 .menu-btn {
     background: none;
     border: none;
     font-size: 1rem;
-    font-weight: 500;
     cursor: pointer;
     color: #111;
-    transition: color 0.3s ease;
-    font-family: inherit;
 }
 
-/* Active white state */
 .text-white {
     color: #fff !important;
 }
 
-/* --- Fullscreen Menu --- */
+/* FULLSCREEN MENU */
 .fullscreen-menu {
     position: fixed;
     top: 0;
@@ -176,39 +63,14 @@ footer {
     transform: translateY(0);
 }
 
-/* --- Menu Links --- */
+/* MENU LINKS */
 .menu-links {
     list-style: none;
-    padding: 0;
-    margin: 0;
     text-align: center;
 }
 
 .menu-links li {
     margin: 1.8rem 0;
-}
-
-/* MAIN TYPOGRAPHY FIX */
-.menu-links a {
-    text-decoration: none;
-    color: #fff;
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
-    font-weight: 600;
-    letter-spacing: -1px;
-    line-height: 1.1;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-/* Premium subtle hover */
-.menu-links a:hover {
-    opacity: 0.6;
-    transform: translateY(-3px);
-}
-.no-scroll {
-    overflow: hidden;
-}
-.menu-links li {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.4s ease;
@@ -217,4 +79,69 @@ footer {
 .fullscreen-menu.open .menu-links li {
     opacity: 1;
     transform: translateY(0);
+}
+
+.menu-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -1px;
+    transition: all 0.3s ease;
+}
+
+.menu-links a:hover {
+    opacity: 0.6;
+    transform: translateY(-3px);
+}
+
+/* MAIN CONTENT */
+main {
+    padding-top: 120px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 80px 0;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    padding: 12px 24px;
+    background: black;
+    color: white;
+    text-decoration: none;
+}
+
+/* BASIC PAGE STYLING */
+.page {
+    max-width: 900px;
+    margin: auto;
+    padding: 60px 0;
+}
+
+.page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.page p {
+    color: #555;
+}
+
+/* PREVENT SCROLL */
+.no-scroll {
+    overflow: hidden;
 }
