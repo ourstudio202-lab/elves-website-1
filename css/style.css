@@ -118,3 +118,90 @@ footer {
     color: var(--text-color);
     font-size: 0.9rem;
 }
+/* --- Header --- */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.8rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #111;
+    letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: #111;
+    transition: color 0.3s ease;
+    font-family: inherit;
+}
+
+/* Active white state */
+.text-white {
+    color: #fff !important;
+}
+
+/* --- Fullscreen Menu --- */
+.fullscreen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0f0f0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+
+    transform: translateY(-100%);
+    transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.fullscreen-menu.open {
+    transform: translateY(0);
+}
+
+/* --- Menu Links --- */
+.menu-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.menu-links li {
+    margin: 1.8rem 0;
+}
+
+/* MAIN TYPOGRAPHY FIX */
+.menu-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* Premium subtle hover */
+.menu-links a:hover {
+    opacity: 0.6;
+    transform: translateY(-3px);
+}
