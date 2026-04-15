@@ -1,16 +1,16 @@
-/* RESET */
+/* ========================= */
+/* RESET & UTILITIES         */
+/* ========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* UTILITIES */
 .no-scroll {
     overflow: hidden;
 }
 
-/* BODY */
 body {
     font-family: 'Inter', sans-serif;
     background: #0b0b0b;
@@ -18,7 +18,9 @@ body {
     overflow-x: hidden;
 }
 
-/* HEADER */
+/* ========================= */
+/* HEADER & NAVIGATION       */
+/* ========================= */
 .site-header {
     position: fixed;
     width: 100%;
@@ -67,7 +69,6 @@ body {
     transform: translateY(0);
 }
 
-/* MENU LINKS */
 .menu-links {
     list-style: none;
     text-align: center;
@@ -95,7 +96,6 @@ body {
     }
 }
 
-/* MENU LINKS STYLE */
 .menu-links a {
     color: rgba(255, 255, 255, 0.3);
     font-size: clamp(2.5rem, 5vw, 4rem);
@@ -103,6 +103,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     text-decoration: none;
+    display: inline-block;
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -112,11 +113,11 @@ body {
 }
 
 /* ========================= */
-/* HERO (FROZEN BACKGROUND)  */
+/* HERO (STICKY EFFECT)      */
 /* ========================= */
-
+/* FIX: Changed from 'fixed' to 'sticky' to prevent the black screen bug */
 .hero {
-    position: fixed;
+    position: sticky; 
     top: 0;
     left: 0;
     width: 100%;
@@ -128,7 +129,6 @@ body {
     overflow: hidden;
 }
 
-/* HERO ORB */
 .hero-orb {
     position: absolute;
     top: 50%;
@@ -150,7 +150,6 @@ body {
     100% { transform: translate(-40%, -60%) scale(1.1); }
 }
 
-/* HERO TEXT */
 .hero-text {
     width: 100%;
     position: relative;
@@ -164,7 +163,6 @@ body {
     font-weight: 500;
 }
 
-/* REVEAL EFFECT */
 .reveal-wrap {
     display: block;
     overflow: hidden;
@@ -197,15 +195,13 @@ body {
 /* ========================= */
 /* OVERLAP CONTENT SECTION   */
 /* ========================= */
-
 .overlap-content {
     position: relative;
     z-index: 10;
-    margin-top: 100vh;
-    background: #0b0b0b;
+    /* FIX: Margin-top removed. Sticky handles the layout naturally now. */
+    background: #0b0b0b; 
 }
 
-/* PHILOSOPHY SECTION */
 .philosophy {
     padding: 150px 5%;
 }
@@ -224,7 +220,6 @@ body {
     margin-bottom: 5rem;
 }
 
-/* TEXT BLOCK */
 .philosophy-text {
     max-width: 800px;
     margin-left: auto;
@@ -242,11 +237,35 @@ body {
 }
 
 /* ========================= */
+/* INTERNAL PAGES (RESTORED) */
+/* ========================= */
+/* FIX: Restored this entire block so About/Work/Contact have correct padding */
+.page {
+    min-height: 100vh;
+    padding: 150px 5% 100px; /* Added extra top padding so header doesn't cover text */
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.page h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 2rem;
+    letter-spacing: -1px;
+}
+
+.page p {
+    color: #aaa;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 700px;
+}
+
+/* ========================= */
 /* RESPONSIVE                */
 /* ========================= */
-
 @media (max-width: 768px) {
-
     .hero h1 {
         font-size: 3rem;
         line-height: 0.9;
