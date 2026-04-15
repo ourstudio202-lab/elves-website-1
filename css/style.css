@@ -249,6 +249,92 @@ body {
 }
 
 /* ========================= */
+/* HOME WORK GRID SECTION    */
+/* ========================= */
+.home-work {
+    padding: 50px 5% 150px; 
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 4rem 2.5rem; 
+}
+
+.work-item {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; 
+    cursor: pointer;
+}
+
+.work-card {
+    background: #ffffff; 
+    border-radius: 28px;
+    overflow: hidden; 
+    aspect-ratio: 4 / 5; 
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); 
+}
+
+.work-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.work-item:hover .work-card img {
+    transform: scale(1.04);
+}
+
+.work-info {
+    text-align: left;
+}
+
+.work-info h3 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.4rem;
+}
+
+.work-info p {
+    color: #888888;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.work-action {
+    margin-top: 6rem;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-pill {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-pill:hover {
+    background: #ffffff;
+    color: #0b0b0b; 
+    transform: scale(1.03);
+}
+
+/* ========================= */
 /* INTERNAL PAGES            */
 /* ========================= */
 .page {
@@ -276,6 +362,13 @@ body {
 /* ========================= */
 /* RESPONSIVE                */
 /* ========================= */
+@media (max-width: 1024px) {
+    .work-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 2rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 3rem;
@@ -293,5 +386,22 @@ body {
     .philosophy h2 {
         white-space: normal; 
         font-size: 2rem; 
+    }
+
+    .home-work {
+        padding: 50px 5% 100px;
+    }
+    
+    .work-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    
+    .work-info h3 {
+        font-size: 1.5rem; 
+    }
+    
+    .work-info p {
+        font-size: 1.1rem;
     }
 }
