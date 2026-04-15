@@ -131,3 +131,22 @@ body {
         font-size: 2rem;
     }
 }
+/* --- PAGE SECTIONS --- */
+.page {
+    min-height: 100vh;
+    padding: 120px 5%;
+    max-width: 900px;
+}
+
+.page h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.page p {
+    color: #aaa;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 600px;
+}
