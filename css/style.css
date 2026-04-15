@@ -205,3 +205,6 @@ footer {
     opacity: 0.6;
     transform: translateY(-3px);
 }
+.no-scroll {
+    overflow: hidden;
+}
