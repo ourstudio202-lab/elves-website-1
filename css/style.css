@@ -23,6 +23,8 @@ body {
 /* ========================= */
 .site-header {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     padding: 1.8rem 5%;
     display: flex;
@@ -54,6 +56,8 @@ body {
 /* FULLSCREEN MENU */
 .fullscreen-menu {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100vh;
     background: #0f0f0f;
@@ -96,6 +100,7 @@ body {
     }
 }
 
+/* APPLE-STYLE MENU LINKS */
 .menu-links a {
     color: rgba(255, 255, 255, 0.3);
     font-size: clamp(2.5rem, 5vw, 4rem);
@@ -113,20 +118,29 @@ body {
 }
 
 /* ========================= */
-/* HERO (STICKY EFFECT)      */
+/* HERO (STICKY & DEPTH)     */
 /* ========================= */
-/* FIX: Changed from 'fixed' to 'sticky' to prevent the black screen bug */
 .hero {
     position: sticky; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     padding: 0 5%;
-    z-index: 1;
-    overflow: hidden;
+    transform-origin: center center;
+    will-change: transform, opacity;
 }
 
 .hero-orb {
@@ -187,9 +201,7 @@ body {
 }
 
 @keyframes slideUp {
-    to {
-        transform: translateY(0);
-    }
+    to { transform: translateY(0); }
 }
 
 /* ========================= */
@@ -198,31 +210,36 @@ body {
 .overlap-content {
     position: relative;
     z-index: 10;
-    /* FIX: Margin-top removed. Sticky handles the layout naturally now. */
     background: #0b0b0b; 
 }
 
+/* PHILOSOPHY SECTION (CENTERED) */
 .philosophy {
     padding: 150px 5%;
+    display: flex;
+    justify-content: center;
 }
 
 .philosophy-inner {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1000px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .philosophy h2 {
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(1.8rem, 4.5vw, 4.5rem);
     font-weight: 700;
     letter-spacing: -2px;
-    line-height: 0.9;
-    margin-bottom: 5rem;
+    line-height: 1;
+    margin-bottom: 3rem;
+    white-space: nowrap; /* Keeps it on one line */
 }
 
 .philosophy-text {
     max-width: 800px;
-    margin-left: auto;
 }
 
 .philosophy-text p {
@@ -237,12 +254,11 @@ body {
 }
 
 /* ========================= */
-/* INTERNAL PAGES (RESTORED) */
+/* INTERNAL PAGES (ABOUT, WORK, CONTACT) */
 /* ========================= */
-/* FIX: Restored this entire block so About/Work/Contact have correct padding */
 .page {
     min-height: 100vh;
-    padding: 150px 5% 100px; /* Added extra top padding so header doesn't cover text */
+    padding: 150px 5% 100px;
     max-width: 900px;
     margin: 0 auto;
     position: relative;
@@ -279,7 +295,8 @@ body {
         padding: 100px 5%;
     }
 
-    .philosophy-text {
-        margin-left: 0;
+    .philosophy h2 {
+        white-space: normal; /* Allows wrapping on tiny screens */
+        font-size: 2.5rem;
     }
 }
