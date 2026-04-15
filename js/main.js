@@ -1,27 +1,42 @@
-// MENU
-const menuBtn = document.getElementById('menu-btn');
-const fullscreenMenu = document.getElementById('fullscreen-menu');
+const menuBtn = document.getElementById("menu-btn");
+const menu = document.getElementById("fullscreen-menu");
 
-menuBtn.addEventListener('click', () => {
-    fullscreenMenu.classList.toggle('open');
-    document.body.classList.toggle('no-scroll');
+let isOpen = false;
 
-    if (fullscreenMenu.classList.contains('open')) {
-        menuBtn.textContent = '× Close';
+menuBtn.addEventListener("click", () => {
+    isOpen = !isOpen;
+
+    if (isOpen) {
+        openMenu();
     } else {
-        menuBtn.textContent = '+ Menu';
+        closeMenu();
     }
 });
 
-// CURSOR INTERACTION (SUBTLE PARALLAX)
-const hero = document.querySelector('.hero');
+function openMenu() {
+    menu.classList.add("open");
+    menuBtn.textContent = "× Close";
 
-hero.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth) - 0.5;
-    const y = (e.clientY / window.innerHeight) - 0.5;
+    // Lock scroll
+    document.body.style.overflow = "hidden";
+}
 
-    document.querySelectorAll('.micro').forEach((el, i) => {
-        const speed = (i + 1) * 10;
-        el.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+function closeMenu() {
+    menu.classList.remove("open");
+    menuBtn.textContent = "+ Menu";
+
+    // Restore scroll (after animation ends)
+    setTimeout(() => {
+        document.body.style.overflow = "";
+    }, 500);
+}
+
+/* CLOSE ON LINK CLICK (Premium UX) */
+const links = document.querySelectorAll(".menu-links a");
+
+links.forEach(link => {
+    link.addEventListener("click", () => {
+        closeMenu();
+        isOpen = false;
     });
 });
