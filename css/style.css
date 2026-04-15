@@ -114,13 +114,18 @@ body {
 }
 
 /* HERO SECTION */
+   /* UPDATED HERO SECTION (Frozen Effect) */
 .hero {
-    min-height: 100vh;
+    position: fixed; /* This locks the hero in place */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     padding: 0 5%;
-    position: relative;
-    overflow: hidden; /* Keeps the orb from breaking the layout */
+    overflow: hidden;
+    z-index: 1; /* Keeps it beneath the new content layer */
 }
 
 /* THE GLOWING ORB */
@@ -221,5 +226,67 @@ body {
 
     .menu-links a {
         font-size: 2.2rem;
+    }
+}
+/* --- OVERLAP CONTENT (The layer that slides over the hero) --- */
+.overlap-content {
+    position: relative;
+    z-index: 10; /* Ensures it slides OVER the hero */
+    margin-top: 100vh; /* Pushes this section exactly below the fold */
+    background: #0b0b0b; /* Crucial: Matches body background to hide the hero as it scrolls up */
+}
+
+/* --- PHILOSOPHY SECTION --- */
+.philosophy {
+    padding: 150px 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.philosophy-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.philosophy h2 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    margin-bottom: 5rem;
+    color: #ffffff;
+}
+
+/* Editorial Layout: Pushes the paragraph block to the right on desktop */
+.philosophy-text {
+    max-width: 800px;
+    margin-left: auto; 
+}
+
+.philosophy-text p {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    line-height: 1.5;
+    color: #888888; /* Highly muted gray for that premium contrast */
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+}
+
+/* Make the first paragraph stand out in pure white */
+.philosophy-text p:first-child {
+    color: #ffffff;
+}
+
+/* Mobile adjustments for the editorial layout */
+@media (max-width: 768px) {
+    .philosophy {
+        padding: 100px 5%;
+    }
+    .philosophy h2 {
+        margin-bottom: 3rem;
+    }
+    .philosophy-text {
+        margin-left: 0; /* Resets the text to the left on mobile */
     }
 }
