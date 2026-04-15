@@ -5,10 +5,11 @@
     box-sizing: border-box;
 }
 
+/* BODY - DARK THEME */
 body {
     font-family: 'Inter', sans-serif;
-    color: #111;
-    background: #fff;
+    background: #0b0b0b;
+    color: #ffffff;
 }
 
 /* --- HEADER --- */
@@ -27,7 +28,7 @@ body {
 .logo-text {
     font-size: 1.4rem;
     font-weight: 600;
-    color: #111;
+    color: #ffffff;
 }
 
 .menu-btn {
@@ -35,10 +36,10 @@ body {
     border: none;
     font-size: 1rem;
     cursor: pointer;
-    color: #111;
+    color: #ffffff;
 }
 
-/* White when menu open */
+/* White state (still useful) */
 .text-white {
     color: #fff !important;
 }
@@ -77,7 +78,7 @@ body {
     transform: translateY(30px);
 }
 
-/* Stagger animation when open */
+/* Stagger animation */
 .fullscreen-menu.open .menu-links li {
     animation: fadeUp 0.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 }
@@ -95,7 +96,7 @@ body {
     animation-delay: 0.4s;
 }
 
-/* Keyframe */
+/* Animation keyframes */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -107,13 +108,14 @@ body {
     }
 }
 
-/* Links styling */
+/* MENU LINK STYLE */
 .menu-links a {
     text-decoration: none;
-    color: #fff;
+    color: #ffffff;
     font-size: clamp(2.8rem, 6vw, 4.5rem);
     font-weight: 600;
-    letter-spacing: -1px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     transition: all 0.3s ease;
 }
 
@@ -141,15 +143,22 @@ main {
 }
 
 .hero p {
-    color: #666;
+    color: #aaa;
     margin-bottom: 2rem;
 }
 
+/* BUTTON */
 .btn {
     padding: 12px 24px;
-    background: black;
-    color: white;
+    background: #ffffff;
+    color: #0b0b0b;
     text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.8;
 }
 
 /* BASIC PAGE */
@@ -165,10 +174,10 @@ main {
 }
 
 .page p {
-    color: #555;
+    color: #aaa;
 }
 
-/* Prevent scroll when menu open */
+/* PREVENT SCROLL WHEN MENU OPEN */
 .no-scroll {
     overflow: hidden;
 }
