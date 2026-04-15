@@ -181,3 +181,22 @@ main {
 .no-scroll {
     overflow: hidden;
 }
+/* --- BASIC RESPONSIVE --- */
+@media (max-width: 768px) {
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .menu-links a {
+        font-size: 2.2rem;
+    }
+
+    .site-header {
+        padding: 1.2rem 5%;
+    }
+}
