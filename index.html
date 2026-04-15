@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Design Elves</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,170 +13,179 @@
 
 <!-- HEADER -->
 <header class="site-header">
-    <a class="logo-text" href="#">Design Elves</a>
+    <a href="index.html" class="logo-text">Design Elves</a>
     <button id="menu-btn" class="menu-btn">+ Menu</button>
 </header>
 
 <!-- MENU -->
 <nav id="fullscreen-menu" class="fullscreen-menu">
     <ul class="menu-links">
-        <li><a href="#">HOME</a></li>
-        <li><a href="#">ABOUT</a></li>
-        <li><a href="#">WORK</a></li>
-        <li><a href="#">CONTACT</a></li>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="work.html">WORK</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
     </ul>
 </nav>
 
+<main>
+
 <!-- HERO -->
 <section class="hero">
-    <div class="hero-content">
+    <div class="hero-content" id="hero-content">
+        <div class="hero-orb"></div>
 
-        <h1>
-            <span class="line-left">DESIGN THAT</span>
-            <span class="line-right">PLAYS SMART.</span>
-        </h1>
-
+        <div class="hero-text">
+            <h1>
+                <div class="reveal-wrap"><span class="line-left">DESIGN THAT</span></div>
+                <div class="reveal-wrap"><span class="line-right">PLAYS SMART.</span></div>
+            </h1>
+        </div>
     </div>
 </section>
 
-<!-- MAIN CONTENT -->
+<!-- OVERLAP SECTION -->
 <div class="overlap-content">
 
-<!-- PHILOSOPHY -->
-<section class="philosophy">
-    <h2>WE DESIGN WITH INTENT</h2>
-    <p>We remove noise and design with clarity, structure, and purpose.</p>
-</section>
-
-<!-- WORK -->
-<section class="home-work">
-
-<div class="work-grid">
-
-<!-- CARD 1 -->
-<div class="work-item" data-id="1">
-    <div class="work-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <img src="https://picsum.photos/800/1000?random=1">
+    <!-- PHILOSOPHY -->
+    <section class="philosophy">
+        <div class="philosophy-inner">
+            <h2>We design with intent.</h2>
+            <div class="philosophy-text">
+                <p>We remove noise. sharpen meaning. design systems that think.</p>
             </div>
-            <div class="card-back"></div>
         </div>
-    </div>
-    <div class="work-info">
-        <h3>Brand Identity</h3>
-        <p>Visual System</p>
-    </div>
-</div>
+    </section>
 
-<!-- CARD 2 -->
-<div class="work-item" data-id="2">
-    <div class="work-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <img src="https://picsum.photos/800/1000?random=2">
-            </div>
-            <div class="card-back"></div>
-        </div>
-    </div>
-    <div class="work-info">
-        <h3>Digital Experience</h3>
-        <p>Web Design</p>
-    </div>
-</div>
+    <!-- WORK SECTION -->
+    <section class="home-work">
 
-<!-- CARD 3 -->
-<div class="work-item" data-id="3">
-    <div class="work-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <img src="https://picsum.photos/800/1000?random=3">
-            </div>
-            <div class="card-back"></div>
-        </div>
-    </div>
-    <div class="work-info">
-        <h3>Editorial</h3>
-        <p>Print Design</p>
-    </div>
-</div>
+        <div class="work-grid">
 
-<!-- CARD 4 -->
-<div class="work-item" data-id="4">
-    <div class="work-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <img src="https://picsum.photos/800/1000?random=4">
-            </div>
-            <div class="card-back"></div>
-        </div>
-    </div>
-    <div class="work-info">
-        <h3>Art Direction</h3>
-        <p>Photography</p>
-    </div>
-</div>
-
-<!-- CARD 5 -->
-<div class="work-item" data-id="5">
-    <div class="work-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <img src="https://picsum.photos/800/1000?random=5">
-            </div>
-            <div class="card-back"></div>
-        </div>
-    </div>
-    <div class="work-info">
-        <h3>Packaging</h3>
-        <p>Product Design</p>
-    </div>
-</div>
-
-<!-- CARD 6 -->
-<div class="work-item" data-id="6">
-    <div class="work-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <img src="https://picsum.photos/800/1000?random=6">
-            </div>
-            <div class="card-back"></div>
-        </div>
-    </div>
-    <div class="work-info">
-        <h3>Campaign</h3>
-        <p>Marketing</p>
-    </div>
-</div>
-
-</div>
-
-</section>
-
-<!-- MODAL -->
-<div id="project-modal" class="modal-overlay">
-    <div class="modal-backdrop"></div>
-
-    <div id="modal-card" class="modal-card">
-
-        <button id="modal-close" class="modal-close">✕</button>
-
-        <div id="modal-scroll-area" class="modal-scroll-area">
-
-            <div class="modal-hero">
-                <img id="modal-img">
+            <!-- CARD 1 -->
+            <div class="work-item" data-id="1">
+                <div class="work-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/800/1000?random=1">
+                        </div>
+                        <div class="card-back">
+                            <h4>Brand Identity</h4>
+                            <p>Visual System</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Brand Identity</h3>
+                    <p>Visual System Design</p>
+                </div>
             </div>
 
-            <div class="modal-content-inner">
-                <h2 id="modal-title"></h2>
-                <p id="modal-overview"></p>
-                <p id="modal-concept"></p>
-                <p id="modal-process"></p>
+            <!-- CARD 2 -->
+            <div class="work-item" data-id="2">
+                <div class="work-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/800/1000?random=2">
+                        </div>
+                        <div class="card-back">
+                            <h4>Digital</h4>
+                            <p>Web Strategy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Digital Presence</h3>
+                    <p>Web Strategy</p>
+                </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="work-item" data-id="3">
+                <div class="work-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/800/1000?random=3">
+                        </div>
+                        <div class="card-back">
+                            <h4>Editorial</h4>
+                            <p>Print Design</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Editorial</h3>
+                    <p>Print Design</p>
+                </div>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="work-item" data-id="4">
+                <div class="work-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/800/1000?random=4">
+                        </div>
+                        <div class="card-back">
+                            <h4>Art Direction</h4>
+                            <p>Visual Campaign</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Art Direction</h3>
+                    <p>Campaign</p>
+                </div>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="work-item" data-id="5">
+                <div class="work-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/800/1000?random=5">
+                        </div>
+                        <div class="card-back">
+                            <h4>Packaging</h4>
+                            <p>Product Design</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Packaging</h3>
+                    <p>Product Design</p>
+                </div>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="work-item" data-id="6">
+                <div class="work-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/800/1000?random=6">
+                        </div>
+                        <div class="card-back">
+                            <h4>Campaign</h4>
+                            <p>Marketing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Campaign</h3>
+                    <p>Activation</p>
+                </div>
             </div>
 
         </div>
-    </div>
+
+        <div class="work-action">
+            <a href="work.html" class="btn">View Projects</a>
+        </div>
+
+    </section>
+
 </div>
+
+</main>
 
 <script src="js/main.js"></script>
 </body>
