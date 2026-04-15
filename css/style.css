@@ -5,11 +5,17 @@
     box-sizing: border-box;
 }
 
+/* UTILITIES */
+.no-scroll {
+    overflow: hidden; /* Prevents background scrolling when menu is open */
+}
+
 /* BODY */
 body {
     font-family: 'Inter', sans-serif;
     background: #0b0b0b;
     color: #ffffff;
+    overflow-x: hidden;
 }
 
 /* HEADER */
@@ -27,6 +33,8 @@ body {
     color: #fff;
     font-weight: 600;
     text-decoration: none;
+    z-index: 100;
+    position: relative;
 }
 
 .menu-btn {
@@ -34,7 +42,11 @@ body {
     border: none;
     color: #fff;
     font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
+    font-family: inherit;
+    z-index: 100;
+    position: relative;
 }
 
 /* FULLSCREEN MENU */
@@ -83,59 +95,107 @@ body {
     }
 }
 
+/* APPLE-STYLE MENU LINKS */
 .menu-links a {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.3); /* Muted base color */
     font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700; /* Bold typography */
     text-transform: uppercase;
     letter-spacing: 2px;
     text-decoration: none;
+    display: inline-block;
+    /* Buttery smooth easing curve */
+    transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* HERO */
+.menu-links a:hover {
+    color: #ffffff; /* Lights up on hover */
+    transform: scale(1.03); /* Subtle pop forward */
+}
+
+/* HERO SECTION */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     padding: 0 5%;
+    position: relative;
+    overflow: hidden; /* Keeps the orb from breaking the layout */
 }
 
+/* THE GLOWING ORB */
+.hero-orb {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 45vw;
+    height: 45vw;
+    min-width: 400px;
+    min-height: 400px;
+    /* A sophisticated, muted off-white/silver glow */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    filter: blur(80px); /* Creates the deep atmosphere */
+    z-index: 0;
+    pointer-events: none; /* Stops it from blocking clicks */
+    animation: floatOrb 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-40%, -60%) scale(1.1); }
+}
+
+/* HERO TYPOGRAPHY */
 .hero-text {
     width: 100%;
+    z-index: 1; /* Puts text above the orb */
+    position: relative;
 }
 
 .hero h1 {
-    font-size: clamp(3rem, 8vw, 7rem);
-    line-height: 0.8;   /* tight leading */
-    letter-spacing: -2px;
+    font-size: clamp(3.5rem, 9vw, 8.5rem); /* Slightly larger for editorial impact */
+    line-height: 0.85; /* Tight editorial leading */
+    letter-spacing: -3px; /* Tighter tracking */
+    font-weight: 500; /* Sophisticated, balanced weight */
 }
 
-/* LEFT RIGHT ALIGNMENT */
-.line-left {
+/* REVEAL MASKING (The magic trick) */
+.reveal-wrap {
     display: block;
+    overflow: hidden; /* Hides the text while it is translated down */
+}
+
+.line-left, .line-right {
+    display: block;
+    /* Pushes text down below its visible box initially */
+    transform: translateY(110%); 
+    /* Premium easing curve for the slide-up reveal */
+    animation: slideUpReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.line-left {
     text-align: left;
+    animation-delay: 0.2s; /* Starts right after page loads */
 }
 
 .line-right {
-    display: block;
     text-align: right;
+    animation-delay: 0.4s; /* Staggered to slide in second */
+    color: #e0e0e0; /* Slightly muted contrast for the second line */
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.5rem;
-        line-height: 0.9;
-    }
-
-    .menu-links a {
-        font-size: 2rem;
-    }
+@keyframes slideUpReveal {
+    to { transform: translateY(0); }
 }
+
 /* --- PAGE SECTIONS --- */
 .page {
     min-height: 100vh;
     padding: 120px 5%;
     max-width: 900px;
+    position: relative;
+    z-index: 1;
 }
 
 .page h1 {
@@ -150,4 +210,16 @@ body {
     line-height: 1.6;
     max-width: 600px;
 }
-.no-scroll { overflow: hidden; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3rem;
+        line-height: 0.9;
+        letter-spacing: -1px;
+    }
+
+    .menu-links a {
+        font-size: 2.2rem;
+    }
+}
