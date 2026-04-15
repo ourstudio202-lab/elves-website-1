@@ -11,7 +11,7 @@ body {
     background: #fff;
 }
 
-/* HEADER */
+/* --- HEADER --- */
 .site-header {
     position: fixed;
     top: 0;
@@ -38,11 +38,12 @@ body {
     color: #111;
 }
 
+/* White when menu open */
 .text-white {
     color: #fff !important;
 }
 
-/* FULLSCREEN MENU */
+/* --- FULLSCREEN MENU --- */
 .fullscreen-menu {
     position: fixed;
     top: 0;
@@ -63,24 +64,50 @@ body {
     transform: translateY(0);
 }
 
-/* MENU LINKS */
+/* --- MENU LINKS --- */
 .menu-links {
     list-style: none;
     text-align: center;
 }
 
+/* Initial state */
 .menu-links li {
     margin: 1.8rem 0;
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
+    transform: translateY(30px);
 }
 
+/* Stagger animation when open */
 .fullscreen-menu.open .menu-links li {
-    opacity: 1;
-    transform: translateY(0);
+    animation: fadeUp 0.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 }
 
+.fullscreen-menu.open .menu-links li:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.fullscreen-menu.open .menu-links li:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.fullscreen-menu.open .menu-links li:nth-child(3) {
+    animation-delay: 0.3s;
+}
+.fullscreen-menu.open .menu-links li:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* Keyframe */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Links styling */
 .menu-links a {
     text-decoration: none;
     color: #fff;
@@ -95,7 +122,7 @@ body {
     transform: translateY(-3px);
 }
 
-/* MAIN CONTENT */
+/* --- MAIN CONTENT --- */
 main {
     padding-top: 120px;
     padding-left: 5%;
@@ -125,7 +152,7 @@ main {
     text-decoration: none;
 }
 
-/* BASIC PAGE STYLING */
+/* BASIC PAGE */
 .page {
     max-width: 900px;
     margin: auto;
@@ -141,7 +168,7 @@ main {
     color: #555;
 }
 
-/* PREVENT SCROLL */
+/* Prevent scroll when menu open */
 .no-scroll {
     overflow: hidden;
 }
