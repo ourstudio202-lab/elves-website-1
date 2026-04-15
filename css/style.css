@@ -1,9 +1,98 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0b0b0b;
+    color: #ffffff;
+}
+
+/* HEADER */
+.site-header {
+    position: fixed;
+    width: 100%;
+    padding: 1.4rem 5%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.logo-text {
+    color: #fff;
+    font-weight: 600;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* MENU */
+.fullscreen-menu {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #0f0f0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-100%);
+    transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.fullscreen-menu.open {
+    transform: translateY(0);
+}
+
+.menu-links {
+    list-style: none;
+    text-align: center;
+}
+
+.menu-links li {
+    margin: 1.6rem 0;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.fullscreen-menu.open .menu-links li {
+    animation: fadeUp 0.6s forwards;
+}
+
+.fullscreen-menu.open .menu-links li:nth-child(1) { animation-delay: 0.1s; }
+.fullscreen-menu.open .menu-links li:nth-child(2) { animation-delay: 0.2s; }
+.fullscreen-menu.open .menu-links li:nth-child(3) { animation-delay: 0.3s; }
+.fullscreen-menu.open .menu-links li:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-links a {
+    color: #fff;
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
 /* HERO */
 .hero {
     height: 100vh;
     display: flex;
     align-items: center;
     padding: 0 6vw;
+    transform: translateY(-3vh);
 }
 
 /* HERO TEXT */
@@ -15,8 +104,8 @@
 .hero h1 {
     font-size: clamp(3.5rem, 9vw, 11rem);
     font-weight: 500;
-    line-height: 0.88; /* ✅ balanced tightness */
-    letter-spacing: -0.03em; /* ✅ responsive + premium */
+    line-height: 0.88;
+    letter-spacing: -0.03em;
 }
 
 /* LINES */
@@ -28,10 +117,36 @@
 .line-right {
     display: block;
     text-align: right;
-    margin-top: -0.12em; /* ✅ optical tightening */
+    margin-top: -0.12em;
+    opacity: 0.9;
 }
 
-/* SUBTLE HIERARCHY */
-.line-right {
-    opacity: 0.9;
+/* SUBTEXT */
+.hero-sub {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    max-width: 300px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero {
+        padding: 0 5vw;
+        transform: translateY(-2vh);
+    }
+
+    .hero h1 {
+        font-size: 2.8rem;
+        line-height: 0.95;
+    }
+
+    .hero-sub {
+        font-size: 0.8rem;
+        margin-top: 1.5rem;
+    }
+
+    .menu-links a {
+        font-size: 2rem;
+    }
 }
