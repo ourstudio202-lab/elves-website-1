@@ -44,12 +44,6 @@ body {
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    
-    /* Studio-level Glassmorphism Header */
-    background: rgba(11, 11, 11, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .logo-text {
@@ -85,11 +79,7 @@ body {
     transform: translateY(-100%);
     transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
     z-index: 90;
-    
-    /* Studio-level Soft Blur Overlay */
-    background: rgba(15, 15, 15, 0.85); 
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: #0f0f0f; 
 }
 
 .fullscreen-menu.open {
@@ -237,7 +227,7 @@ body {
 
 /* PHILOSOPHY SECTION */
 .philosophy {
-    padding: 100px 5% 50px; /* Reduced harsh gap to bring text in faster */
+    padding: 100px 5% 50px; 
     display: flex;
     justify-content: center;
 }
@@ -274,7 +264,7 @@ body {
 /* HOME WORK GRID SECTION    */
 /* ========================= */
 .home-work {
-    padding: 120px 5% 150px; /* Increased breathing room before grid */
+    padding: 120px 5% 150px; 
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -282,15 +272,8 @@ body {
 .work-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
-    gap: 8rem 2.5rem; /* Massive vertical gap for that airy studio feel */
-    align-items: start; 
-}
-
-/* THE CURATED STAGGER: Pushes the middle column down on desktop */
-@media (min-width: 1025px) {
-    .work-item:nth-child(3n-1) {
-        margin-top: 6rem;
-    }
+    gap: 8rem 2.5rem; 
+    align-items: start; /* All cards align perfectly to the top now */
 }
 
 .work-item {
@@ -352,7 +335,7 @@ body {
 }
 
 .work-action {
-    margin-top: 8rem; /* Adjusted for the new massive row gaps */
+    margin-top: 8rem; 
     display: flex;
     justify-content: center;
 }
