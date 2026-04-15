@@ -8,7 +8,6 @@ body {
     font-family: Inter, sans-serif;
     background: #0b0b0b;
     color: #fff;
-    overflow-x: hidden;
 }
 
 .no-scroll { overflow: hidden; }
@@ -17,33 +16,40 @@ body {
 .site-header {
     position: fixed;
     width: 100%;
-    padding: 1.8rem 5%;
+    padding: 1.5rem 5%;
     display: flex;
     justify-content: space-between;
     z-index: 100;
 }
 
+.logo-text, .menu-btn {
+    color: #fff;
+    background: none;
+    border: none;
+}
+
 /* HERO */
 .hero {
+    height: 100vh;
     position: sticky;
     top: 0;
-    height: 100vh;
 }
 
 .hero-content {
     height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     padding: 0 5%;
 }
 
 .hero h1 {
-    font-size: 7vw;
-    line-height: 0.85;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.9;
 }
 
 .line-left { text-align: left; }
-.line-right { text-align: right; color: #aaa; }
+.line-right { text-align: right; opacity: 0.7; }
 
 /* OVERLAP */
 .overlap-content {
@@ -52,11 +58,12 @@ body {
     background: #0b0b0b;
 }
 
-/* WORK GRID */
+/* GRID */
 .work-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+    padding: 5rem;
 }
 
 .work-card {
@@ -77,8 +84,7 @@ body {
 
 .card-front, .card-back {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     backface-visibility: hidden;
 }
 
@@ -97,17 +103,33 @@ body {
     pointer-events: all;
 }
 
-.modal-card {
+.modal-backdrop {
     position: absolute;
-    border-radius: 24px;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.modal-overlay.active .modal-backdrop {
+    opacity: 1;
+}
+
+.modal-card {
+    position: fixed;
+    top: 0;
+    left: 0;
     background: #111;
+    border-radius: 20px;
     overflow: hidden;
+    transition: all 0.9s cubic-bezier(0.22,1,0.36,1);
 }
 
 .modal-scroll-area {
     height: 100%;
     overflow-y: auto;
     opacity: 0;
+    transition: 0.4s;
 }
 
 .modal-scroll-area.active {
