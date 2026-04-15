@@ -1,81 +1,77 @@
-const modal = document.getElementById("project-modal");
-const card = document.getElementById("modal-card");
-const scroll = document.getElementById("modal-scroll-area");
-const closeBtn = document.getElementById("modal-close");
+// ==========================
+// MENU
+// ==========================
+const menuBtn = document.getElementById("menu-btn");
+const menu = document.getElementById("fullscreen-menu");
 
-let active = null;
+menuBtn.addEventListener("click", () => {
+    menu.classList.toggle("open");
+    document.body.classList.toggle("no-scroll");
 
-function rect(el) {
-    return el.getBoundingClientRect();
-}
-
-function open(item) {
-
-if (active) return;
-
-active = item;
-
-const id = item.dataset.id;
-const workCard = item.querySelector(".work-card");
-const inner = item.querySelector(".card-inner");
-
-const r = rect(workCard);
-
-modal.classList.add("active");
-document.body.style.overflow = "hidden";
-
-card.style.top = r.top + "px";
-card.style.left = r.left + "px";
-card.style.width = r.width + "px";
-card.style.height = r.height + "px";
-
-inner.classList.add("is-flipped");
-
-requestAnimationFrame(() => {
-requestAnimationFrame(() => {
-
-card.style.top = "5vh";
-card.style.left = "50%";
-card.style.width = "90vw";
-card.style.height = "85vh";
-card.style.transform = "translateX(-50%)";
-
-setTimeout(() => {
-scroll.classList.add("active");
-}, 300);
-
-});
+    menuBtn.textContent = menu.classList.contains("open") ? "× Close" : "+ Menu";
 });
 
-}
 
-function close() {
+// ==========================
+// HERO SCROLL EFFECT
+// ==========================
+const heroContent = document.getElementById("hero-content");
 
-const item = active;
-const workCard = item.querySelector(".work-card");
-const inner = item.querySelector(".card-inner");
+window.addEventListener("scroll", () => {
+    if (!heroContent) return;
 
-const r = rect(workCard);
+    const scrollY = window.scrollY;
 
-scroll.classList.remove("active");
+    const opacity = Math.max(1 - scrollY / 600, 0);
+    const scale = Math.max(1 - scrollY / 1500, 0.85);
 
-card.style.top = r.top + "px";
-card.style.left = r.left + "px";
-card.style.width = r.width + "px";
-card.style.height = r.height + "px";
-card.style.transform = "none";
+    heroContent.style.opacity = opacity;
+    heroContent.style.transform = `scale(${scale})`;
+});
 
-setTimeout(() => {
-modal.classList.remove("active");
-inner.classList.remove("is-flipped");
-document.body.style.overflow = "auto";
-active = null;
-}, 900);
 
-}
+// ==========================
+// SCROLL REVEAL
+// ==========================
+const revealElements = document.querySelectorAll(".fade-in-up");
 
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+revealElements.forEach(el => observer.observe(el));
+
+
+// ==========================
+// SIMPLE CARD FLIP (hover-style backup)
+// ==========================
 document.querySelectorAll(".work-item").forEach(item => {
-item.addEventListener("click", () => open(item));
+    const cardInner = item.querySelector(".card-inner");
+
+    item.addEventListener("mouseenter", () => {
+        cardInner.classList.add("is-flipped");
+    });
+
+    item.addEventListener("mouseleave", () => {
+        cardInner.classList.remove("is-flipped");
+    });
 });
 
-closeBtn.addEventListener("click", close);
+
+// ==========================
+// PROJECT DATA (for future modal system)
+// ==========================
+const projectData = {
+    1: { title: "Brand Identity" },
+    2: { title: "Digital Presence" },
+    3: { title: "Editorial Design" },
+    4: { title: "Art Direction" },
+    5: { title: "Packaging" },
+    6: { title: "Campaign" }
+};
