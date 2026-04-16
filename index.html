@@ -7,6 +7,9 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Flip.min.js"></script>
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -52,17 +55,27 @@
         <section class="home-work">
             <div class="work-grid" id="work-grid">
                 
-                <div class="work-item fade-in-up" data-id="1">
-                    <div class="work-card">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img src="https://picsum.photos/800/1000?random=1" alt="Brand Identity">
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <h4>Brand Identity</h4>
-                                    <p>Visual System Design</p>
-                                    <span class="view-tag">View Case Study →</span>
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=1" class="card-hero-img" alt="Brand Identity">
+                            
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Brand Identity</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>A comprehensive brand identity overhaul designed to communicate clarity, structure, and premium aesthetics. We developed a highly flexible visual system.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>The core concept revolves around the idea of 'reduction'. Stripping away unnecessary noise to let the bold typography and stark contrast do the heavy lifting.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>We began with extensive competitor analysis, moving into wireframing the identity across digital touchpoints, and finalizing the rigorous brand guidelines.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,17 +86,26 @@
                     </div>
                 </div>
 
-                <div class="work-item fade-in-up" data-id="2">
-                    <div class="work-card">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img src="https://picsum.photos/800/1000?random=2" alt="Digital Presence">
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <h4>Digital Presence</h4>
-                                    <p>Web Development & Strategy</p>
-                                    <span class="view-tag">View Case Study →</span>
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=2" class="card-hero-img" alt="Digital Presence">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Digital Presence</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>End-to-end web strategy and development for a modern tech consultancy.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Creating a seamless, fluid user experience through custom interactions and a strict monochromatic color palette.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Developed on a custom headless CMS structure, ensuring lightning-fast load times and infinite scalability.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -94,17 +116,26 @@
                     </div>
                 </div>
 
-                <div class="work-item fade-in-up" data-id="3">
-                    <div class="work-card">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img src="https://picsum.photos/800/1000?random=3" alt="Editorial Design">
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <h4>Editorial Design</h4>
-                                    <p>Print & Publication</p>
-                                    <span class="view-tag">View Case Study →</span>
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=3" class="card-hero-img" alt="Editorial Design">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Editorial Design</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>A massive 300-page print publication focusing on modern architectural forms.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Drawing inspiration from brutalist architecture, the layout relies on heavy grid structures and dynamic whitespace.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Typeset primarily in Inter and Helvetica, we worked closely with local print shops to ensure perfect color calibration on uncoated paper.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -115,17 +146,26 @@
                     </div>
                 </div>
 
-                <div class="work-item fade-in-up" data-id="4">
-                    <div class="work-card">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img src="https://picsum.photos/800/1000?random=4" alt="Art Direction">
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <h4>Art Direction</h4>
-                                    <p>Photography & Styling</p>
-                                    <span class="view-tag">View Case Study →</span>
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=4" class="card-hero-img" alt="Art Direction">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Art Direction</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>Creative direction for a high-end fashion editorial campaign.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Isolating the subjects in stark, surreal environments to emphasize the silhouette of the garments.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Managed set design, lighting plans, and post-production color grading.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,17 +176,26 @@
                     </div>
                 </div>
 
-                <div class="work-item fade-in-up" data-id="5">
-                    <div class="work-card">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img src="https://picsum.photos/800/1000?random=5" alt="Packaging">
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <h4>Packaging</h4>
-                                    <p>Product & Retail Design</p>
-                                    <span class="view-tag">View Case Study →</span>
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=5" class="card-hero-img" alt="Packaging">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Packaging</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>Sustainable packaging solutions for a boutique cosmetics brand.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Utilitarian yet luxurious. We wanted the packaging to feel like a high-end industrial product.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Sourced 100% recycled corrugated materials and utilized single-color foil stamping.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,17 +206,26 @@
                     </div>
                 </div>
 
-                <div class="work-item fade-in-up" data-id="6">
-                    <div class="work-card">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <img src="https://picsum.photos/800/1000?random=6" alt="Creative Campaign">
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <h4>Creative Campaign</h4>
-                                    <p>Marketing & Activation</p>
-                                    <span class="view-tag">View Case Study →</span>
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=6" class="card-hero-img" alt="Creative Campaign">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Creative Campaign</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>A localized outdoor and digital activation campaign.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Using hyper-local messaging combined with highly abstracted 3D visuals to capture attention.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Rolled out across billboards, social channels, and physical pop-up installations over 30 days.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -185,38 +243,7 @@
             </div>
         </section>
 
-        <div id="project-modal" class="modal-overlay">
-            <div class="modal-backdrop"></div>
-            
-            <div id="modal-card" class="modal-card">
-                <button id="modal-close" class="modal-close">✕</button>
-                
-                <div class="modal-scroll-area" id="modal-scroll-area">
-                    <div class="modal-hero">
-                        <img id="modal-img" src="" alt="Project Hero">
-                    </div>
-                    
-                    <div class="modal-content-inner">
-                        <h2 id="modal-title">Project Title</h2>
-                        
-                        <div class="modal-text-section">
-                            <h3>Overview</h3>
-                            <p id="modal-overview">Detailed project overview goes here.</p>
-                        </div>
-
-                        <div class="modal-text-section">
-                            <h3>Concept</h3>
-                            <p id="modal-concept">Strategic thinking and conceptual framework.</p>
-                        </div>
-                        
-                        <div class="modal-text-section">
-                            <h3>Process</h3>
-                            <p id="modal-process">Execution details and final delivery notes.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="modal-overlay"></div>
 
     </div>
 </main>
