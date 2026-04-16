@@ -51,15 +51,17 @@ if (revealElements.length > 0) {
 }
 
 // ==========================================
-// 4. GSAP CLONE & MORPH INTERACTION (FRAMER STYLE)
+// 4. GSAP 3D FLIP + EXPAND SYSTEM
 // ==========================================
 if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').length > 0) {
     
+    gsap.registerPlugin(Flip);
     const overlay = document.querySelector('.modal-overlay');
 
     document.querySelectorAll('.work-item').forEach(item => {
         item.addEventListener('click', function(e) {
             
+            // Prevent spam clicks
             if (document.querySelector('.clone-card')) return;
 
             const card = this.querySelector('.work-card');
@@ -70,7 +72,7 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
             clone.classList.add('clone-card');
             document.body.appendChild(clone);
 
-            // 2. Setup Clone Initial Bounds
+            // 2. Setup Initial Clone State with 3D Perspective
             gsap.set(clone, {
                 position: 'fixed',
                 top: rect.top,
@@ -81,13 +83,16 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
                 zIndex: 1001,
                 overflow: 'hidden',
                 borderRadius: '24px',
-                backgroundColor: '#ffffff'
+                backgroundColor: '#ffffff',
+                transformPerspective: 1500, // Establish 3D space
+                transformOrigin: "center center"
             });
 
-            // 3. Hide original card
-            gsap.set(card, { opacity: 0 });
+            // Capture FLIP State
+            const state = Flip.getState(clone);
 
-            // 4. Show overlay and lock body
+            // 3. Hide original card and prep UI
+            gsap.set(card, { opacity: 0 });
             if (overlay) overlay.classList.add('active');
             document.body.classList.add('no-scroll');
 
@@ -95,104 +100,127 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
             const hiddenContent = clone.querySelector('.card-content-hidden');
             const closeBtn = clone.querySelector('.close-btn');
 
-            // 5. Safely extract the close button and pin it to the viewport
+            // Select elements to stagger
+            const contentElements = clone.querySelectorAll('.modal-title, .modal-text-section');
+
+            // Extract close button to window to prevent scrolling away
             document.body.appendChild(closeBtn);
             closeBtn.classList.add('fixed-close-btn');
 
-            gsap.set(hiddenContent, { display: 'block', opacity: 0, y: 40 });
-            gsap.set(closeBtn, { opacity: 0, pointerEvents: 'none', y: 0 });
+            gsap.set(hiddenContent, { display: 'block' });
+            gsap.set(contentElements, { opacity: 0, y: 40 }); // Push text down for reveal
+            gsap.set(closeBtn, { opacity: 0, pointerEvents: 'none' });
 
-            // 6. Calculate Center Target Destination (Covering Top & Bottom perfectly)
+            // 4. Calculate Final Destination
             const targetWidth = window.innerWidth > 1000 ? window.innerWidth * 0.7 : window.innerWidth * 0.95;
-            const targetHeight = window.innerHeight; // Full viewport height
-            const targetLeft = (window.innerWidth - targetWidth) / 2; // Margins only on left/right
-            const targetTop = 0; // Flush with top
+            const targetHeight = window.innerHeight; 
+            const targetLeft = (window.innerWidth - targetWidth) / 2; 
 
-            // 7. OPEN ANIMATION TIMELINE
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    clone.style.overflowY = 'auto'; // Allows scrolling once animation is done
-                }
-            });
-
-            gsap.fromTo(clone, 
-                { rotationY: -10 }, 
-                { rotationY: 0, duration: 0.8, ease: "power3.out" }
-            );
-
-            tl.to(clone, {
-                top: targetTop,
+            // Move clone to final coordinates for FLIP to calculate
+            gsap.set(clone, {
+                top: 0,
                 left: targetLeft,
                 width: targetWidth,
                 height: targetHeight,
-                borderRadius: 0, // Animate to 0 to sit flush with the screen edges
-                backgroundColor: '#ffffff', 
-                boxShadow: '0 0 100px rgba(0,0,0,0.8)',
-                duration: 0.8,
-                ease: 'power3.out'
-            }, 0)
-            .to(heroImg, {
-                height: '60vh', // Larger editorial hero image
-                minHeight: '400px',
-                duration: 0.8,
-                ease: 'power3.out'
-            }, 0)
-            .to([hiddenContent, closeBtn], {
+                borderRadius: 0 
+            });
+
+            // 5. THE 3D OPEN MOTION
+            Flip.from(state, {
+                duration: 0.9,
+                ease: "power3.inOut",
+                absolute: true,
+                onStart: () => {
+                    // Inject the 3D tilt concurrently with the spatial expansion
+                    gsap.fromTo(clone, 
+                        { rotationY: -12, z: -50 }, 
+                        { rotationY: 0, z: 0, duration: 0.9, ease: "power3.inOut" }
+                    );
+                    
+                    // Image leads the expansion
+                    gsap.to(heroImg, { height: '60vh', minHeight: '400px', duration: 0.9, ease: "power3.inOut" });
+                    
+                    // Add subtle lift shadow
+                    gsap.to(clone, { boxShadow: '0 40px 100px rgba(0,0,0,0.4)', duration: 0.9 });
+                },
+                onComplete: () => {
+                    clone.style.overflowY = 'auto'; // Enable scrolling once animation finishes
+                }
+            });
+
+            // 6. STAGGERED CONTENT REVEAL (Starts near end of flip)
+            gsap.to(contentElements, {
                 opacity: 1,
                 y: 0,
-                pointerEvents: 'auto',
-                duration: 0.5,
-                ease: 'power2.out'
-            }, "-=0.3"); 
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power2.out",
+                delay: 0.5 
+            });
 
-            // 8. CLOSE EVENT LISTENER ON FIXED BUTTON
+            gsap.to(closeBtn, {
+                opacity: 1,
+                pointerEvents: 'auto',
+                duration: 0.4,
+                delay: 0.6
+            });
+
+            // 7. CLOSE INTERACTION (Snappy Reverse)
             closeBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 
+                // Lock scroll & Reset position instantly to avoid glitches
                 clone.style.overflowY = 'hidden';
-                gsap.to(clone, { scrollTop: 0, duration: 0.3 }); 
+                gsap.set(clone, { scrollTop: 0 }); 
                 
-                const closeTl = gsap.timeline({
-                    onComplete: () => {
-                        gsap.set(card, { opacity: 1 });
-                        clone.remove(); 
-                        closeBtn.remove(); // Safely destroy the extracted button
-                        if(overlay) overlay.classList.remove('active');
-                        document.body.classList.remove('no-scroll');
-                    }
+                const closeTl = gsap.timeline();
+                
+                // Fade out text rapidly
+                closeTl.to(contentElements, { 
+                    opacity: 0, 
+                    y: 15, 
+                    duration: 0.3, 
+                    stagger: 0.05, 
+                    ease: "power2.inOut" 
                 });
+                closeTl.to(closeBtn, { opacity: 0, duration: 0.3 }, 0);
                 
-                closeTl.to([hiddenContent, closeBtn], {
-                    opacity: 0,
-                    y: 20,
-                    duration: 0.3,
-                    ease: 'power2.inOut'
-                }, 0);
-                
-                const currentRect = card.getBoundingClientRect();
-                
-                gsap.fromTo(clone, 
-                    { rotationY: 0 }, 
-                    { rotationY: 10, duration: 0.8, ease: "power2.inOut" }
-                );
+                // Begin Reverse FLIP
+                closeTl.add(() => {
+                    const returnState = Flip.getState(clone);
+                    const currentRect = card.getBoundingClientRect(); // Live coordinates
+                    
+                    gsap.set(clone, {
+                        top: currentRect.top,
+                        left: currentRect.left,
+                        width: currentRect.width,
+                        height: currentRect.height,
+                        borderRadius: '24px'
+                    });
 
-                closeTl.to(clone, {
-                    top: currentRect.top,
-                    left: currentRect.left,
-                    width: currentRect.width,
-                    height: currentRect.height,
-                    borderRadius: '24px', // Bring the rounded edges back
-                    backgroundColor: '#ffffff',
-                    boxShadow: '0 0 0 rgba(0,0,0,0)',
-                    duration: 0.8,
-                    ease: 'power2.inOut'
-                }, 0.1)
-                .to(heroImg, {
-                    height: '100%',
-                    minHeight: '0px',
-                    duration: 0.8,
-                    ease: 'power2.inOut'
-                }, 0.1);
+                    Flip.from(returnState, {
+                        duration: 0.6, // Snappier return speed
+                        ease: "power3.inOut",
+                        absolute: true,
+                        onStart: () => {
+                            // Reverse 3D tilt
+                            gsap.fromTo(clone, 
+                                { rotationY: 0, z: 0 }, 
+                                { rotationY: 8, z: -30, duration: 0.6, ease: "power3.inOut" }
+                            );
+                            gsap.to(heroImg, { height: '100%', minHeight: '0px', duration: 0.6, ease: "power3.inOut" });
+                            gsap.to(clone, { boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.05)', duration: 0.6 });
+                        },
+                        onComplete: () => {
+                            // Cleanup
+                            gsap.set(card, { opacity: 1 });
+                            clone.remove(); 
+                            closeBtn.remove();
+                            if(overlay) overlay.classList.remove('active');
+                            document.body.classList.remove('no-scroll');
+                        }
+                    });
+                });
             });
         });
     });
