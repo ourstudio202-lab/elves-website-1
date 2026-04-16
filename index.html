@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design Elves</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Elves</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Flip.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
 <header class="site-header">
@@ -30,104 +29,223 @@
 </nav>
 
 <main>
-
-<section class="hero">
-    <div class="hero-content" id="hero-content">
-        <div class="hero-orb"></div>
-        <div class="hero-text">
-            <h1>
-                <div class="reveal-wrap"><span class="line-left">DESIGN THAT</span></div>
-                <div class="reveal-wrap"><span class="line-right">PLAYS SMART.</span></div>
-            </h1>
+    <section class="hero">
+        <div class="hero-content" id="hero-content">
+            <div class="hero-orb"></div>
+            <div class="hero-text">
+                <h1>
+                    <div class="reveal-wrap"><span class="line-left">DESIGN THAT</span></div>
+                    <div class="reveal-wrap"><span class="line-right">PLAYS SMART.</span></div>
+                </h1>
+            </div>
         </div>
+    </section>
+
+    <div class="overlap-content">
+        
+        <section class="philosophy">
+            <div class="philosophy-inner fade-in-up">
+                <h2>WE DESIGN WITH INTENT</h2>
+                <div class="philosophy-text">
+                    <p>We remove noise, sharpen ideas, and design with purpose. Every detail exists for a reason.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-work">
+            <div class="work-grid" id="work-grid">
+                
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=1" class="card-hero-img" alt="Brand Identity">
+                            
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Brand Identity</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>A comprehensive brand identity overhaul designed to communicate clarity, structure, and premium aesthetics. We developed a highly flexible visual system.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>The core concept revolves around the idea of 'reduction'. Stripping away unnecessary noise to let the bold typography and stark contrast do the heavy lifting.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>We began with extensive competitor analysis, moving into wireframing the identity across digital touchpoints, and finalizing the rigorous brand guidelines.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h3>Brand Identity</h3>
+                        <p>Visual System Design</p>
+                    </div>
+                </div>
+
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=2" class="card-hero-img" alt="Digital Presence">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Digital Presence</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>End-to-end web strategy and development for a modern tech consultancy.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Creating a seamless, fluid user experience through custom interactions and a strict monochromatic color palette.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Developed on a custom headless CMS structure, ensuring lightning-fast load times and infinite scalability.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h3>Digital Presence</h3>
+                        <p>Web Development & Strategy</p>
+                    </div>
+                </div>
+
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=3" class="card-hero-img" alt="Editorial Design">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Editorial Design</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>A massive 300-page print publication focusing on modern architectural forms.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Drawing inspiration from brutalist architecture, the layout relies on heavy grid structures and dynamic whitespace.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Typeset primarily in Inter and Helvetica, we worked closely with local print shops to ensure perfect color calibration on uncoated paper.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h3>Editorial Design</h3>
+                        <p>Print & Publication</p>
+                    </div>
+                </div>
+
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=4" class="card-hero-img" alt="Art Direction">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Art Direction</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>Creative direction for a high-end fashion editorial campaign.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Isolating the subjects in stark, surreal environments to emphasize the silhouette of the garments.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Managed set design, lighting plans, and post-production color grading.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h3>Art Direction</h3>
+                        <p>Photography & Styling</p>
+                    </div>
+                </div>
+
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=5" class="card-hero-img" alt="Packaging">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Packaging</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>Sustainable packaging solutions for a boutique cosmetics brand.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Utilitarian yet luxurious. We wanted the packaging to feel like a high-end industrial product.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Sourced 100% recycled corrugated materials and utilized single-color foil stamping.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h3>Packaging</h3>
+                        <p>Product & Retail Design</p>
+                    </div>
+                </div>
+
+                <div class="work-item fade-in-up">
+                    <div class="work-card-wrapper">
+                        <div class="work-card">
+                            <button class="close-btn">✕</button>
+                            <img src="https://picsum.photos/800/1000?random=6" class="card-hero-img" alt="Creative Campaign">
+                            <div class="card-content-hidden">
+                                <div class="modal-content-inner">
+                                    <h2 class="modal-title">Creative Campaign</h2>
+                                    <div class="modal-text-section">
+                                        <h3>Overview</h3>
+                                        <p>A localized outdoor and digital activation campaign.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Concept</h3>
+                                        <p>Using hyper-local messaging combined with highly abstracted 3D visuals to capture attention.</p>
+                                    </div>
+                                    <div class="modal-text-section">
+                                        <h3>Process</h3>
+                                        <p>Rolled out across billboards, social channels, and physical pop-up installations over 30 days.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h3>Creative Campaign</h3>
+                        <p>Marketing & Activation</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="work-action fade-in-up">
+                <a href="work.html" class="btn-pill">View Projects</a>
+            </div>
+        </section>
+
+        <div class="modal-overlay"></div>
+
     </div>
-</section>
-
-<div class="overlap-content">
-
-<section class="philosophy">
-    <div class="philosophy-inner fade-in-up">
-        <h2>WE DESIGN WITH INTENT</h2>
-        <p>Less noise. More meaning.</p>
-    </div>
-</section>
-
-<section class="home-work">
-<div class="work-grid">
-
-<!-- CARD -->
-<div class="work-item fade-in-up">
-<div class="work-card">
-<img src="https://picsum.photos/800/1000?1" class="card-img">
-</div>
-<div class="work-info">
-<h3>Brand Identity</h3>
-<p>Visual System</p>
-</div>
-</div>
-
-<div class="work-item fade-in-up">
-<div class="work-card">
-<img src="https://picsum.photos/800/1000?2" class="card-img">
-</div>
-<div class="work-info">
-<h3>Digital</h3>
-<p>Web & UX</p>
-</div>
-</div>
-
-<div class="work-item fade-in-up">
-<div class="work-card">
-<img src="https://picsum.photos/800/1000?3" class="card-img">
-</div>
-<div class="work-info">
-<h3>Editorial</h3>
-<p>Print Design</p>
-</div>
-</div>
-
-<div class="work-item fade-in-up">
-<div class="work-card">
-<img src="https://picsum.photos/800/1000?4" class="card-img">
-</div>
-<div class="work-info">
-<h3>Art Direction</h3>
-<p>Campaign</p>
-</div>
-</div>
-
-<div class="work-item fade-in-up">
-<div class="work-card">
-<img src="https://picsum.photos/800/1000?5" class="card-img">
-</div>
-<div class="work-info">
-<h3>Packaging</h3>
-<p>Retail</p>
-</div>
-</div>
-
-<div class="work-item fade-in-up">
-<div class="work-card">
-<img src="https://picsum.photos/800/1000?6" class="card-img">
-</div>
-<div class="work-info">
-<h3>Campaign</h3>
-<p>Marketing</p>
-</div>
-</div>
-
-</div>
-
-<div class="work-action">
-<a href="work.html" class="btn-pill">View Projects</a>
-</div>
-
-</section>
-
-<div id="floating-layer"></div>
-<div class="overlay-bg"></div>
-
-</div>
 </main>
 
 <script src="js/main.js"></script>
