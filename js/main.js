@@ -1,156 +1,202 @@
 // ==========================================
-// SETUP GSAP
-// ==========================================
-gsap.registerPlugin(Flip);
-
-// ==========================================
-// FULLSCREEN MENU TOGGLE
+// 1. FULLSCREEN MENU (Safe for all pages)
 // ==========================================
 const menuBtn = document.getElementById('menu-btn');
 const fullscreenMenu = document.getElementById('fullscreen-menu');
 
-menuBtn.addEventListener('click', () => {
-    fullscreenMenu.classList.toggle('open');
-    document.body.classList.toggle('no-scroll');
+if (menuBtn && fullscreenMenu) {
+    menuBtn.addEventListener('click', () => {
+        fullscreenMenu.classList.toggle('open');
+        document.body.classList.toggle('no-scroll');
 
-    if (fullscreenMenu.classList.contains('open')) {
-        menuBtn.textContent = '× Close';
-    } else {
-        menuBtn.textContent = '+ Menu';
-    }
-});
-
-// ==========================================
-// HERO SCROLL EFFECT
-// ==========================================
-const heroContent = document.getElementById('hero-content');
-
-window.addEventListener('scroll', () => {
-    if (!heroContent) return;
-    const scrollPosition = window.scrollY;
-    
-    const opacity = Math.max(1 - scrollPosition / 600, 0);
-    const scale = Math.max(1 - scrollPosition / 1500, 0.85);
-    
-    heroContent.style.opacity = opacity;
-    heroContent.style.transform = `scale(${scale})`;
-});
-
-// ==========================================
-// SCROLL REVEAL ANIMATIONS
-// ==========================================
-const revealElements = document.querySelectorAll('.fade-in-up');
-const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-
-const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target); 
+        if (fullscreenMenu.classList.contains('open')) {
+            menuBtn.textContent = '× Close';
+        } else {
+            menuBtn.textContent = '+ Menu';
         }
     });
-}, revealOptions);
-
-revealElements.forEach(el => revealOnScroll.observe(el));
-
+}
 
 // ==========================================
-// ADVANCED GSAP FLIP PROJECT INTERACTION
+// 2. HERO SCROLL EFFECT (Safe for all pages)
 // ==========================================
-const overlay = document.querySelector('.modal-overlay');
-let activeCard = null;
-
-document.querySelectorAll('.work-item').forEach(item => {
-    const card = item.querySelector('.work-card');
-    const heroImg = card.querySelector('.card-hero-img');
-    const hiddenContent = card.querySelector('.card-content-hidden');
-    const closeBtn = card.querySelector('.close-btn');
-
-    // 1. Initial State for the content
-    gsap.set(hiddenContent, { display: "none", opacity: 0, y: 40 });
-
-    // 2. Open Animation
-    card.addEventListener('click', (e) => {
-        // Prevent clicking if a card is already expanding
-        if (card.classList.contains('expanded') || activeCard) return;
-        activeCard = card;
-
-        // Capture current bounds (position, size)
-        const state = Flip.getState([card, heroImg]);
-
-        // Toggle CSS class to shift the layout to "Expanded Mode"
-        card.classList.add('expanded');
-        overlay.classList.add('active');
-        document.body.classList.add('no-scroll');
+const heroContent = document.getElementById('hero-content');
+if (heroContent) {
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY;
+        const opacity = Math.max(1 - scrollPosition / 600, 0);
+        const scale = Math.max(1 - scrollPosition / 1500, 0.85);
         
-        // Render content block (so it takes up physical space) before animating
-        gsap.set(hiddenContent, { display: "block" });
+        heroContent.style.opacity = opacity;
+        heroContent.style.transform = `scale(${scale})`;
+    });
+}
 
-        // Trigger the magical GSAP FLIP
-        Flip.from(state, {
-            duration: 0.8,
-            ease: "power3.out",
-            absolute: true, // Prevents layout collapses during animation
-            onStart: () => {
-                // Simultaneously apply the slight 3D rotation effect during the transition
-                gsap.fromTo(card, 
-                    { rotationY: -12, z: -100 }, 
-                    { rotationY: 0, z: 0, duration: 0.8, ease: "power3.out" }
-                );
-            },
-            onComplete: () => {
-                // Once FLIP is done, fade & slide in the text content
-                gsap.to(hiddenContent, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    ease: "power3.out"
-                });
+// ==========================================
+// 3. SCROLL REVEAL ANIMATIONS
+// ==========================================
+const revealElements = document.querySelectorAll('.fade-in-up');
+if (revealElements.length > 0) {
+    const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    const revealOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); 
             }
         });
-    });
+    }, revealOptions);
 
-    // 3. Close Animation
-    closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Stops the card click event from firing again
-        if (!card.classList.contains('expanded')) return;
+    revealElements.forEach(el => revealOnScroll.observe(el));
+}
 
-        // Step A: Fade out text content first
-        gsap.to(hiddenContent, {
-            opacity: 0,
-            y: 20,
-            duration: 0.4,
-            ease: "power2.inOut",
-            onComplete: () => {
-                // Step B: Set content to display none and scroll back to top
-                gsap.set(hiddenContent, { display: "none" });
-                card.scrollTop = 0; // Extremely important to prevent layout jumping
+// ==========================================
+// 4. GSAP CLONE & MORPH INTERACTION
+// ==========================================
+// Check if GSAP is loaded and we are on a page with work items
+if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').length > 0) {
+    
+    const overlay = document.querySelector('.modal-overlay');
 
-                // Step C: Capture state BEFORE returning to grid
-                const state = Flip.getState([card, heroImg]);
+    document.querySelectorAll('.work-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            
+            // Prevent clicking if a clone animation is already running
+            if (document.querySelector('.clone-card')) return;
 
-                // Step D: Revert classes back to grid mode
-                card.classList.remove('expanded');
-                overlay.classList.remove('active');
-                document.body.classList.remove('no-scroll');
+            const card = this.querySelector('.work-card');
+            const rect = card.getBoundingClientRect(); // Get exact grid position
 
-                // Step E: Trigger the reverse FLIP
-                Flip.from(state, {
-                    duration: 0.8,
-                    ease: "power2.inOut",
-                    absolute: true,
-                    onStart: () => {
-                        // Simultaneously apply the reverse 3D rotation effect
-                        gsap.fromTo(card, 
-                            { rotationY: 10, z: 50 }, 
-                            { rotationY: 0, z: 0, duration: 0.8, ease: "power2.inOut" }
-                        );
-                    },
+            // 1. Create Clone
+            const clone = card.cloneNode(true);
+            clone.classList.add('clone-card');
+            document.body.appendChild(clone);
+
+            // 2. Setup Clone Initial Bounds to match original perfectly
+            gsap.set(clone, {
+                position: 'fixed',
+                top: rect.top,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height,
+                margin: 0,
+                zIndex: 1001,
+                overflow: 'hidden',
+                borderRadius: '24px',
+                backgroundColor: '#ffffff'
+            });
+
+            // 3. Hide the original card
+            gsap.set(card, { opacity: 0 });
+
+            // 4. Show dark background and lock scroll
+            if (overlay) overlay.classList.add('active');
+            document.body.classList.add('no-scroll');
+
+            // Select elements inside the clone
+            const heroImg = clone.querySelector('.card-hero-img');
+            const hiddenContent = clone.querySelector('.card-content-hidden');
+            const closeBtn = clone.querySelector('.close-btn');
+
+            // Prep hidden elements for animation
+            gsap.set(hiddenContent, { display: 'block', opacity: 0, y: 30 });
+            gsap.set(closeBtn, { opacity: 0, pointerEvents: 'none' });
+
+            // 5. Calculate Center Target Destination
+            const targetWidth = window.innerWidth > 1000 ? 1000 : window.innerWidth * 0.9;
+            const targetHeight = window.innerHeight * 0.85;
+            const targetLeft = (window.innerWidth - targetWidth) / 2;
+            const targetTop = (window.innerHeight - targetHeight) / 2;
+
+            // 6. OPEN ANIMATION TIMELINE
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    clone.style.overflowY = 'auto'; // Allow scrolling once open
+                }
+            });
+
+            // Animate 3D rotation and expand to center
+            gsap.fromTo(clone, 
+                { rotationY: -10 }, 
+                { rotationY: 0, duration: 0.8, ease: "power3.out" }
+            );
+
+            tl.to(clone, {
+                top: targetTop,
+                left: targetLeft,
+                width: targetWidth,
+                height: targetHeight,
+                backgroundColor: '#111111', // Morph into dark theme container
+                boxShadow: '0 40px 100px rgba(0,0,0,0.8)',
+                duration: 0.8,
+                ease: 'power3.out'
+            }, 0)
+            .to(heroImg, {
+                height: '55vh',
+                minHeight: '400px',
+                duration: 0.8,
+                ease: 'power3.out'
+            }, 0)
+            .to([hiddenContent, closeBtn], {
+                opacity: 1,
+                y: 0,
+                pointerEvents: 'auto',
+                duration: 0.4,
+                ease: 'power2.out'
+            }, "-=0.2"); // Start slightly before the morph finishes
+
+            // 7. CLOSE EVENT LISTENER ON CLONE
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                clone.style.overflowY = 'hidden';
+                gsap.to(clone, { scrollTop: 0, duration: 0.3 }); // Smooth scroll back to top of card
+                
+                const closeTl = gsap.timeline({
                     onComplete: () => {
-                        activeCard = null; // Free up the interaction
+                        // Restore Original Grid Item
+                        gsap.set(card, { opacity: 1 });
+                        clone.remove(); // Delete clone
+                        if(overlay) overlay.classList.remove('active');
+                        document.body.classList.remove('no-scroll');
                     }
                 });
-            }
+                
+                // Fade out content inside clone
+                closeTl.to([hiddenContent, closeBtn], {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.3,
+                    ease: 'power2.inOut'
+                }, 0);
+                
+                // Recalculate original bounds (in case the browser was resized while open)
+                const currentRect = card.getBoundingClientRect();
+                
+                // Animate 3D reverse rotation
+                gsap.fromTo(clone, 
+                    { rotationY: 0 }, 
+                    { rotationY: 10, duration: 0.8, ease: "power2.inOut" }
+                );
+
+                // Shrink Clone back to grid position
+                closeTl.to(clone, {
+                    top: currentRect.top,
+                    left: currentRect.left,
+                    width: currentRect.width,
+                    height: currentRect.height,
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0 0 0 rgba(0,0,0,0)',
+                    duration: 0.8,
+                    ease: 'power2.inOut'
+                }, 0.1)
+                .to(heroImg, {
+                    height: '100%',
+                    minHeight: '0px',
+                    duration: 0.8,
+                    ease: 'power2.inOut'
+                }, 0.1);
+            });
         });
     });
-});
+}
