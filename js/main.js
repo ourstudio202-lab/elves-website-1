@@ -1,155 +1,136 @@
 // ==========================================
-// SETUP GSAP
+// GSAP SETUP
 // ==========================================
 gsap.registerPlugin(Flip);
 
 // ==========================================
-// FULLSCREEN MENU TOGGLE
+// SAFE ELEMENT HELPERS
 // ==========================================
-const menuBtn = document.getElementById('menu-btn');
-const fullscreenMenu = document.getElementById('fullscreen-menu');
-
-menuBtn.addEventListener('click', () => {
-    fullscreenMenu.classList.toggle('open');
-    document.body.classList.toggle('no-scroll');
-
-    if (fullscreenMenu.classList.contains('open')) {
-        menuBtn.textContent = '× Close';
-    } else {
-        menuBtn.textContent = '+ Menu';
-    }
-});
+const safeQuery = (selector) => document.querySelector(selector);
+const safeQueryAll = (selector) => document.querySelectorAll(selector);
 
 // ==========================================
-// HERO SCROLL EFFECT
+// MENU TOGGLE (WORKS ON ALL PAGES)
 // ==========================================
-const heroContent = document.getElementById('hero-content');
+const menuBtn = safeQuery('#menu-btn');
+const fullscreenMenu = safeQuery('#fullscreen-menu');
 
-window.addEventListener('scroll', () => {
-    if (!heroContent) return;
-    const scrollPosition = window.scrollY;
-    
-    const opacity = Math.max(1 - scrollPosition / 600, 0);
-    const scale = Math.max(1 - scrollPosition / 1500, 0.85);
-    
-    heroContent.style.opacity = opacity;
-    heroContent.style.transform = `scale(${scale})`;
-});
+if (menuBtn && fullscreenMenu) {
+    menuBtn.addEventListener('click', () => {
+        fullscreenMenu.classList.toggle('open');
+        document.body.classList.toggle('no-scroll');
 
-// ==========================================
-// SCROLL REVEAL ANIMATIONS
-// ==========================================
-const revealElements = document.querySelectorAll('.fade-in-up');
-const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-
-const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target); 
-        }
+        menuBtn.textContent = fullscreenMenu.classList.contains('open')
+            ? '× Close'
+            : '+ Menu';
     });
-}, revealOptions);
-
-revealElements.forEach(el => revealOnScroll.observe(el));
-
+}
 
 // ==========================================
-// ADVANCED GSAP FLIP PROJECT INTERACTION
+// HERO SCROLL (SAFE)
 // ==========================================
-const overlay = document.querySelector('.modal-overlay');
+const heroContent = safeQuery('#hero-content');
+
+if (heroContent) {
+    window.addEventListener('scroll', () => {
+        const scroll = window.scrollY;
+        heroContent.style.opacity = Math.max(1 - scroll / 600, 0);
+        heroContent.style.transform = `scale(${Math.max(1 - scroll / 1500, 0.85)})`;
+    });
+}
+
+// ==========================================
+// SCROLL REVEAL (SAFE)
+// ==========================================
+const revealElements = safeQueryAll('.fade-in-up');
+
+if (revealElements.length > 0) {
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => observer.observe(el));
+}
+
+// ==========================================
+// GSAP CARD INTERACTION (FIXED)
+// ==========================================
+const overlay = safeQuery('.modal-overlay');
 let activeCard = null;
 
-document.querySelectorAll('.work-item').forEach(item => {
+safeQueryAll('.work-item').forEach(item => {
     const card = item.querySelector('.work-card');
-    const heroImg = card.querySelector('.card-hero-img');
-    const hiddenContent = card.querySelector('.card-content-hidden');
-    const closeBtn = card.querySelector('.close-btn');
+    const content = item.querySelector('.card-content-hidden');
+    const closeBtn = item.querySelector('.close-btn');
 
-    // 1. Initial State for the content
-    gsap.set(hiddenContent, { display: "none", opacity: 0, y: 40 });
+    if (!card || !content || !closeBtn) return;
 
-    // 2. Open Animation
-    card.addEventListener('click', (e) => {
-        // Prevent clicking if a card is already expanding
-        if (card.classList.contains('expanded') || activeCard) return;
+    gsap.set(content, { display: "none", opacity: 0, y: 40 });
+
+    // OPEN
+    card.addEventListener('click', () => {
+        if (activeCard) return;
         activeCard = card;
 
-        // Capture current bounds (position, size)
-        const state = Flip.getState([card, heroImg]);
+        const state = Flip.getState(card);
 
-        // Toggle CSS class to shift the layout to "Expanded Mode"
         card.classList.add('expanded');
-        overlay.classList.add('active');
         document.body.classList.add('no-scroll');
-        
-        // Render content block (so it takes up physical space) before animating
-        gsap.set(hiddenContent, { display: "block" });
 
-        // Trigger the magical GSAP FLIP
+        if (overlay) overlay.classList.add('active');
+
+        gsap.set(content, { display: "block" });
+
         Flip.from(state, {
             duration: 0.8,
             ease: "power3.out",
-            absolute: true, // Prevents layout collapses during animation
-            onStart: () => {
-                // Simultaneously apply the slight 3D rotation effect during the transition
-                gsap.fromTo(card, 
-                    { rotationY: -12, z: -100 }, 
-                    { rotationY: 0, z: 0, duration: 0.8, ease: "power3.out" }
-                );
-            },
-            onComplete: () => {
-                // Once FLIP is done, fade & slide in the text content
-                gsap.to(hiddenContent, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    ease: "power3.out"
-                });
-            }
+            absolute: true
+        });
+
+        gsap.fromTo(card,
+            { rotateY: -10 },
+            { rotateY: 0, duration: 0.8, ease: "power3.out" }
+        );
+
+        gsap.to(content, {
+            opacity: 1,
+            y: 0,
+            delay: 0.3,
+            duration: 0.6
         });
     });
 
-    // 3. Close Animation
+    // CLOSE
     closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Stops the card click event from firing again
-        if (!card.classList.contains('expanded')) return;
+        e.stopPropagation();
 
-        // Step A: Fade out text content first
-        gsap.to(hiddenContent, {
+        if (!activeCard) return;
+
+        gsap.to(content, {
             opacity: 0,
             y: 20,
-            duration: 0.4,
-            ease: "power2.inOut",
+            duration: 0.3,
             onComplete: () => {
-                // Step B: Set content to display none and scroll back to top
-                gsap.set(hiddenContent, { display: "none" });
-                card.scrollTop = 0; // Extremely important to prevent layout jumping
+                gsap.set(content, { display: "none" });
 
-                // Step C: Capture state BEFORE returning to grid
-                const state = Flip.getState([card, heroImg]);
+                const state = Flip.getState(card);
 
-                // Step D: Revert classes back to grid mode
                 card.classList.remove('expanded');
-                overlay.classList.remove('active');
                 document.body.classList.remove('no-scroll');
+                if (overlay) overlay.classList.remove('active');
 
-                // Step E: Trigger the reverse FLIP
                 Flip.from(state, {
-                    duration: 0.8,
+                    duration: 0.7,
                     ease: "power2.inOut",
-                    absolute: true,
-                    onStart: () => {
-                        // Simultaneously apply the reverse 3D rotation effect
-                        gsap.fromTo(card, 
-                            { rotationY: 10, z: 50 }, 
-                            { rotationY: 0, z: 0, duration: 0.8, ease: "power2.inOut" }
-                        );
-                    },
-                    onComplete: () => {
-                        activeCard = null; // Free up the interaction
-                    }
+                    absolute: true
                 });
+
+                activeCard = null;
             }
         });
     });
