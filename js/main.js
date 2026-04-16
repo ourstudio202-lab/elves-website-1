@@ -1,44 +1,7 @@
 // ==========================================
-// DYNAMIC PROJECT DATA
+// SETUP GSAP
 // ==========================================
-const projectData = {
-    "1": {
-        title: "Brand Identity", img: "https://picsum.photos/800/1000?random=1",
-        overview: "A comprehensive brand identity overhaul designed to communicate clarity, structure, and premium aesthetics. We developed a highly flexible visual system.",
-        concept: "The core concept revolves around the idea of 'reduction'. Stripping away unnecessary noise to let the bold typography and stark contrast do the heavy lifting.",
-        process: "We began with extensive competitor analysis, moving into wireframing the identity across digital touchpoints, and finalizing the rigorous brand guidelines."
-    },
-    "2": {
-        title: "Digital Presence", img: "https://picsum.photos/800/1000?random=2",
-        overview: "End-to-end web strategy and development for a modern tech consultancy.",
-        concept: "Creating a seamless, fluid user experience through custom interactions and a strict monochromatic color palette.",
-        process: "Developed on a custom headless CMS structure, ensuring lightning-fast load times and infinite scalability."
-    },
-    "3": {
-        title: "Editorial Design", img: "https://picsum.photos/800/1000?random=3",
-        overview: "A massive 300-page print publication focusing on modern architectural forms.",
-        concept: "Drawing inspiration from brutalist architecture, the layout relies on heavy grid structures and dynamic whitespace.",
-        process: "Typeset primarily in Inter and Helvetica, we worked closely with local print shops to ensure perfect color calibration on uncoated paper."
-    },
-    "4": {
-        title: "Art Direction", img: "https://picsum.photos/800/1000?random=4",
-        overview: "Creative direction for a high-end fashion editorial campaign.",
-        concept: "Isolating the subjects in stark, surreal environments to emphasize the silhouette of the garments.",
-        process: "Managed set design, lighting plans, and post-production color grading."
-    },
-    "5": {
-        title: "Packaging", img: "https://picsum.photos/800/1000?random=5",
-        overview: "Sustainable packaging solutions for a boutique cosmetics brand.",
-        concept: "Utilitarian yet luxurious. We wanted the packaging to feel like a high-end industrial product.",
-        process: "Sourced 100% recycled corrugated materials and utilized single-color foil stamping."
-    },
-    "6": {
-        title: "Creative Campaign", img: "https://picsum.photos/800/1000?random=6",
-        overview: "A localized outdoor and digital activation campaign.",
-        concept: "Using hyper-local messaging combined with highly abstracted 3D visuals to capture attention.",
-        process: "Rolled out across billboards, social channels, and physical pop-up installations over 30 days."
-    }
-};
+gsap.registerPlugin(Flip);
 
 // ==========================================
 // FULLSCREEN MENU TOGGLE
@@ -90,99 +53,104 @@ const revealOnScroll = new IntersectionObserver(function(entries, observer) {
 
 revealElements.forEach(el => revealOnScroll.observe(el));
 
-// ==========================================
-// 2-STAGE MODAL INTERACTION SYSTEM
-// ==========================================
-const modalOverlay = document.getElementById('project-modal');
-const modalCard = document.getElementById('modal-card');
-const modalScrollArea = document.getElementById('modal-scroll-area');
-const modalCloseBtn = document.getElementById('modal-close');
 
-let activeWorkItem = null; 
+// ==========================================
+// ADVANCED GSAP FLIP PROJECT INTERACTION
+// ==========================================
+const overlay = document.querySelector('.modal-overlay');
+let activeCard = null;
 
 document.querySelectorAll('.work-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-        if (activeWorkItem) return; 
+    const card = item.querySelector('.work-card');
+    const heroImg = card.querySelector('.card-hero-img');
+    const hiddenContent = card.querySelector('.card-content-hidden');
+    const closeBtn = card.querySelector('.close-btn');
+
+    // 1. Initial State for the content
+    gsap.set(hiddenContent, { display: "none", opacity: 0, y: 40 });
+
+    // 2. Open Animation
+    card.addEventListener('click', (e) => {
+        // Prevent clicking if a card is already expanding
+        if (card.classList.contains('expanded') || activeCard) return;
+        activeCard = card;
+
+        // Capture current bounds (position, size)
+        const state = Flip.getState([card, heroImg]);
+
+        // Toggle CSS class to shift the layout to "Expanded Mode"
+        card.classList.add('expanded');
+        overlay.classList.add('active');
+        document.body.classList.add('no-scroll');
         
-        const projectId = this.getAttribute('data-id');
-        const data = projectData[projectId];
-        if (!data) return;
+        // Render content block (so it takes up physical space) before animating
+        gsap.set(hiddenContent, { display: "block" });
 
-        activeWorkItem = this;
-        const cardInner = this.querySelector('.card-inner');
-        const workCard = this.querySelector('.work-card');
-
-        // STAGE 1: The 3D Flip
-        cardInner.classList.add('is-flipped');
-
-        // STAGE 2: The Expansion
-        setTimeout(() => {
-            document.getElementById('modal-title').textContent = data.title;
-            document.getElementById('modal-img').src = data.img;
-            document.getElementById('modal-overview').textContent = data.overview;
-            document.getElementById('modal-concept').textContent = data.concept;
-            document.getElementById('modal-process').textContent = data.process;
-
-            const rect = workCard.getBoundingClientRect();
-
-            modalCard.style.top = rect.top + 'px';
-            modalCard.style.left = rect.left + 'px';
-            modalCard.style.width = rect.width + 'px';
-            modalCard.style.height = rect.height + 'px';
-            modalCard.style.transform = 'none';
-            modalCard.style.opacity = '1';
-
-            modalOverlay.classList.add('active');
-            document.body.classList.add('no-scroll');
-
-            cardInner.style.opacity = '0';
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    modalCard.style.top = '50%';
-                    modalCard.style.left = '50%';
-                    modalCard.style.width = '90vw';
-                    modalCard.style.maxWidth = '1000px';
-                    modalCard.style.height = '85vh';
-                    modalCard.style.transform = 'translate(-50%, -50%)';
-                    
-                    modalScrollArea.style.opacity = '1';
+        // Trigger the magical GSAP FLIP
+        Flip.from(state, {
+            duration: 0.8,
+            ease: "power3.out",
+            absolute: true, // Prevents layout collapses during animation
+            onStart: () => {
+                // Simultaneously apply the slight 3D rotation effect during the transition
+                gsap.fromTo(card, 
+                    { rotationY: -12, z: -100 }, 
+                    { rotationY: 0, z: 0, duration: 0.8, ease: "power3.out" }
+                );
+            },
+            onComplete: () => {
+                // Once FLIP is done, fade & slide in the text content
+                gsap.to(hiddenContent, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power3.out"
                 });
-            });
-
-        }, 800); 
+            }
+        });
     });
-});
 
-// 3. Close Interaction
-modalCloseBtn.addEventListener('click', () => {
-    if (!activeWorkItem) return;
+    // 3. Close Animation
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stops the card click event from firing again
+        if (!card.classList.contains('expanded')) return;
 
-    const workCard = activeWorkItem.querySelector('.work-card');
-    const cardInner = activeWorkItem.querySelector('.card-inner');
+        // Step A: Fade out text content first
+        gsap.to(hiddenContent, {
+            opacity: 0,
+            y: 20,
+            duration: 0.4,
+            ease: "power2.inOut",
+            onComplete: () => {
+                // Step B: Set content to display none and scroll back to top
+                gsap.set(hiddenContent, { display: "none" });
+                card.scrollTop = 0; // Extremely important to prevent layout jumping
 
-    modalScrollArea.style.opacity = '0';
+                // Step C: Capture state BEFORE returning to grid
+                const state = Flip.getState([card, heroImg]);
 
-    const rect = workCard.getBoundingClientRect();
+                // Step D: Revert classes back to grid mode
+                card.classList.remove('expanded');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
 
-    modalCard.style.top = rect.top + 'px';
-    modalCard.style.left = rect.left + 'px';
-    modalCard.style.width = rect.width + 'px';
-    modalCard.style.height = rect.height + 'px';
-    modalCard.style.transform = 'none';
-
-    modalOverlay.classList.remove('active');
-
-    // STAGE 4: Restore Original Card and Flip Back
-    setTimeout(() => {
-        cardInner.style.opacity = '1';
-        modalCard.style.opacity = '0';
-
-        cardInner.classList.remove('is-flipped');
-
-        activeWorkItem = null;
-        document.body.classList.remove('no-scroll');
-        
-        modalScrollArea.scrollTop = 0;
-    }, 800); 
+                // Step E: Trigger the reverse FLIP
+                Flip.from(state, {
+                    duration: 0.8,
+                    ease: "power2.inOut",
+                    absolute: true,
+                    onStart: () => {
+                        // Simultaneously apply the reverse 3D rotation effect
+                        gsap.fromTo(card, 
+                            { rotationY: 10, z: 50 }, 
+                            { rotationY: 0, z: 0, duration: 0.8, ease: "power2.inOut" }
+                        );
+                    },
+                    onComplete: () => {
+                        activeCard = null; // Free up the interaction
+                    }
+                });
+            }
+        });
+    });
 });
