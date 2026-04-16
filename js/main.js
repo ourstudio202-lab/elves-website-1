@@ -95,19 +95,23 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
             const hiddenContent = clone.querySelector('.card-content-hidden');
             const closeBtn = clone.querySelector('.close-btn');
 
-            gsap.set(hiddenContent, { display: 'block', opacity: 0, y: 40 });
-            gsap.set(closeBtn, { opacity: 0, pointerEvents: 'none' });
+            // 5. Safely extract the close button and pin it to the viewport
+            document.body.appendChild(closeBtn);
+            closeBtn.classList.add('fixed-close-btn');
 
-            // 5. Calculate Center Target Destination (Covering Top & Bottom)
+            gsap.set(hiddenContent, { display: 'block', opacity: 0, y: 40 });
+            gsap.set(closeBtn, { opacity: 0, pointerEvents: 'none', y: 0 });
+
+            // 6. Calculate Center Target Destination (Covering Top & Bottom perfectly)
             const targetWidth = window.innerWidth > 1000 ? window.innerWidth * 0.7 : window.innerWidth * 0.95;
             const targetHeight = window.innerHeight; // Full viewport height
             const targetLeft = (window.innerWidth - targetWidth) / 2; // Margins only on left/right
             const targetTop = 0; // Flush with top
 
-            // 6. OPEN ANIMATION TIMELINE
+            // 7. OPEN ANIMATION TIMELINE
             const tl = gsap.timeline({
                 onComplete: () => {
-                    clone.style.overflowY = 'auto'; 
+                    clone.style.overflowY = 'auto'; // Allows scrolling once animation is done
                 }
             });
 
@@ -141,7 +145,7 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
                 ease: 'power2.out'
             }, "-=0.3"); 
 
-            // 7. CLOSE EVENT LISTENER ON CLONE
+            // 8. CLOSE EVENT LISTENER ON FIXED BUTTON
             closeBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 
@@ -152,6 +156,7 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
                     onComplete: () => {
                         gsap.set(card, { opacity: 1 });
                         clone.remove(); 
+                        closeBtn.remove(); // Safely destroy the extracted button
                         if(overlay) overlay.classList.remove('active');
                         document.body.classList.remove('no-scroll');
                     }
