@@ -1,5 +1,5 @@
 // ==========================================
-// 1. FULLSCREEN MENU (Safe for all pages)
+// 1. FULLSCREEN MENU
 // ==========================================
 const menuBtn = document.getElementById('menu-btn');
 const fullscreenMenu = document.getElementById('fullscreen-menu');
@@ -18,7 +18,7 @@ if (menuBtn && fullscreenMenu) {
 }
 
 // ==========================================
-// 2. HERO SCROLL EFFECT (Safe for all pages)
+// 2. HERO SCROLL EFFECT 
 // ==========================================
 const heroContent = document.getElementById('hero-content');
 if (heroContent) {
@@ -51,9 +51,8 @@ if (revealElements.length > 0) {
 }
 
 // ==========================================
-// 4. GSAP CLONE & MORPH INTERACTION
+// 4. GSAP CLONE & MORPH INTERACTION (FRAMER STYLE)
 // ==========================================
-// Check if GSAP is loaded and we are on a page with work items
 if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').length > 0) {
     
     const overlay = document.querySelector('.modal-overlay');
@@ -61,18 +60,17 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
     document.querySelectorAll('.work-item').forEach(item => {
         item.addEventListener('click', function(e) {
             
-            // Prevent clicking if a clone animation is already running
             if (document.querySelector('.clone-card')) return;
 
             const card = this.querySelector('.work-card');
-            const rect = card.getBoundingClientRect(); // Get exact grid position
+            const rect = card.getBoundingClientRect(); 
 
             // 1. Create Clone
             const clone = card.cloneNode(true);
             clone.classList.add('clone-card');
             document.body.appendChild(clone);
 
-            // 2. Setup Clone Initial Bounds to match original perfectly
+            // 2. Setup Clone Initial Bounds
             gsap.set(clone, {
                 position: 'fixed',
                 top: rect.top,
@@ -86,36 +84,33 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
                 backgroundColor: '#ffffff'
             });
 
-            // 3. Hide the original card
+            // 3. Hide original card
             gsap.set(card, { opacity: 0 });
 
-            // 4. Show dark background and lock scroll
+            // 4. Show overlay and lock body
             if (overlay) overlay.classList.add('active');
             document.body.classList.add('no-scroll');
 
-            // Select elements inside the clone
             const heroImg = clone.querySelector('.card-hero-img');
             const hiddenContent = clone.querySelector('.card-content-hidden');
             const closeBtn = clone.querySelector('.close-btn');
 
-            // Prep hidden elements for animation
-            gsap.set(hiddenContent, { display: 'block', opacity: 0, y: 30 });
+            gsap.set(hiddenContent, { display: 'block', opacity: 0, y: 40 });
             gsap.set(closeBtn, { opacity: 0, pointerEvents: 'none' });
 
-            // 5. Calculate Center Target Destination
-            const targetWidth = window.innerWidth > 1000 ? 1000 : window.innerWidth * 0.9;
-            const targetHeight = window.innerHeight * 0.85;
-            const targetLeft = (window.innerWidth - targetWidth) / 2;
-            const targetTop = (window.innerHeight - targetHeight) / 2;
+            // 5. Calculate Center Target Destination (Covering Top & Bottom)
+            const targetWidth = window.innerWidth > 1000 ? window.innerWidth * 0.7 : window.innerWidth * 0.95;
+            const targetHeight = window.innerHeight; // Full viewport height
+            const targetLeft = (window.innerWidth - targetWidth) / 2; // Margins only on left/right
+            const targetTop = 0; // Flush with top
 
             // 6. OPEN ANIMATION TIMELINE
             const tl = gsap.timeline({
                 onComplete: () => {
-                    clone.style.overflowY = 'auto'; // Allow scrolling once open
+                    clone.style.overflowY = 'auto'; 
                 }
             });
 
-            // Animate 3D rotation and expand to center
             gsap.fromTo(clone, 
                 { rotationY: -10 }, 
                 { rotationY: 0, duration: 0.8, ease: "power3.out" }
@@ -126,13 +121,14 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
                 left: targetLeft,
                 width: targetWidth,
                 height: targetHeight,
-                backgroundColor: '#111111', // Morph into dark theme container
-                boxShadow: '0 40px 100px rgba(0,0,0,0.8)',
+                borderRadius: 0, // Animate to 0 to sit flush with the screen edges
+                backgroundColor: '#ffffff', 
+                boxShadow: '0 0 100px rgba(0,0,0,0.8)',
                 duration: 0.8,
                 ease: 'power3.out'
             }, 0)
             .to(heroImg, {
-                height: '55vh',
+                height: '60vh', // Larger editorial hero image
                 minHeight: '400px',
                 duration: 0.8,
                 ease: 'power3.out'
@@ -141,28 +137,26 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
                 opacity: 1,
                 y: 0,
                 pointerEvents: 'auto',
-                duration: 0.4,
+                duration: 0.5,
                 ease: 'power2.out'
-            }, "-=0.2"); // Start slightly before the morph finishes
+            }, "-=0.3"); 
 
             // 7. CLOSE EVENT LISTENER ON CLONE
             closeBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 
                 clone.style.overflowY = 'hidden';
-                gsap.to(clone, { scrollTop: 0, duration: 0.3 }); // Smooth scroll back to top of card
+                gsap.to(clone, { scrollTop: 0, duration: 0.3 }); 
                 
                 const closeTl = gsap.timeline({
                     onComplete: () => {
-                        // Restore Original Grid Item
                         gsap.set(card, { opacity: 1 });
-                        clone.remove(); // Delete clone
+                        clone.remove(); 
                         if(overlay) overlay.classList.remove('active');
                         document.body.classList.remove('no-scroll');
                     }
                 });
                 
-                // Fade out content inside clone
                 closeTl.to([hiddenContent, closeBtn], {
                     opacity: 0,
                     y: 20,
@@ -170,21 +164,19 @@ if (typeof gsap !== 'undefined' && document.querySelectorAll('.work-item').lengt
                     ease: 'power2.inOut'
                 }, 0);
                 
-                // Recalculate original bounds (in case the browser was resized while open)
                 const currentRect = card.getBoundingClientRect();
                 
-                // Animate 3D reverse rotation
                 gsap.fromTo(clone, 
                     { rotationY: 0 }, 
                     { rotationY: 10, duration: 0.8, ease: "power2.inOut" }
                 );
 
-                // Shrink Clone back to grid position
                 closeTl.to(clone, {
                     top: currentRect.top,
                     left: currentRect.left,
                     width: currentRect.width,
                     height: currentRect.height,
+                    borderRadius: '24px', // Bring the rounded edges back
                     backgroundColor: '#ffffff',
                     boxShadow: '0 0 0 rgba(0,0,0,0)',
                     duration: 0.8,
