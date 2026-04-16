@@ -123,37 +123,40 @@ body {
 /* ========================= */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     opacity: 0; pointer-events: none; z-index: 1000; transition: opacity 0.6s ease;
 }
 .modal-overlay.active { opacity: 1; pointer-events: all; }
 
-/* The specific clone that GSAP creates and animates */
+/* The clone that spans top to bottom */
 .clone-card {
-    border: 1px solid rgba(255,255,255,0.1);
-    transform-style: preserve-3d; /* Allows the 3D twist */
+    transform-style: preserve-3d;
+    background: #ffffff; /* Expanded card is now white */
 }
 
-/* Custom Scrollbar for the Expanded Card */
+/* Custom Scrollbar for the Expanded Card (Light Theme) */
 .clone-card::-webkit-scrollbar { width: 8px; }
-.clone-card::-webkit-scrollbar-track { background: transparent; }
-.clone-card::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+.clone-card::-webkit-scrollbar-track { background: #f4f4f4; }
+.clone-card::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
 
 /* Hidden content structures */
-.card-content-hidden { display: none; width: 100%; }
-.close-btn {
-    position: absolute; top: 20px; right: 20px; z-index: 20; width: 40px; height: 40px; border-radius: 50%;
-    background: rgba(0,0,0,0.5); color: #fff; border: none; font-size: 1.2rem; cursor: pointer;
-    backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: background 0.3s ease, transform 0.3s ease;
-}
-.close-btn:hover { background: #fff; color: #000; transform: scale(1.1); }
+.card-content-hidden { display: none; width: 100%; background: #ffffff; }
 
-/* Interior Formatting */
-.modal-content-inner { padding: 5rem 10%; margin: 0 auto; max-width: 900px; }
-.modal-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 4rem; color: #fff; }
+/* Close Button (Moved to Top Left, adjusted for visibility) */
+.close-btn {
+    position: absolute; top: 30px; left: 30px; z-index: 20; width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85); color: #000; border: none; font-size: 1.2rem; cursor: pointer;
+    backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: background 0.3s ease, transform 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+.close-btn:hover { background: #fff; transform: scale(1.1); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+/* Interior Formatting (Updated for White Background) */
+.modal-content-inner { padding: 5rem 10%; margin: 0 auto; max-width: 900px; background: #ffffff; }
+.modal-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 4rem; color: #0b0b0b; }
 .modal-text-section { margin-bottom: 3rem; }
-.modal-text-section h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
-.modal-text-section p { font-size: 1.2rem; line-height: 1.8; color: #bbb; }
+.modal-text-section h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+.modal-text-section p { font-size: 1.2rem; line-height: 1.8; color: #333; }
 
 /* ========================= */
 /* INTERNAL PAGES            */
