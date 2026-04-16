@@ -1,9 +1,7 @@
 /* ========================= */
 /* RESET & UTILITIES         */
 /* ========================= */
-* {
-    margin: 0; padding: 0; box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 .no-scroll { overflow: hidden; }
 
@@ -26,26 +24,15 @@ body {
 /* ========================= */
 .site-header {
     position: fixed; top: 0; left: 0; width: 100%;
-    padding: 1.8rem 5%;
-    display: flex; justify-content: space-between; align-items: center;
-    z-index: 100;
+    padding: 1.8rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100;
 }
-.logo-text, .menu-btn {
-    color: #fff; font-weight: 600; text-decoration: none;
-    position: relative; z-index: 100;
-}
-.menu-btn {
-    background: none; border: none; font-size: 1rem;
-    font-weight: 500; cursor: pointer; font-family: inherit;
-}
+.logo-text, .menu-btn { color: #fff; font-weight: 600; text-decoration: none; position: relative; z-index: 100; }
+.menu-btn { background: none; border: none; font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit; }
 
 .fullscreen-menu {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background: #0f0f0f;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #0f0f0f;
     display: flex; justify-content: center; align-items: center;
-    transform: translateY(-100%);
-    transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
-    z-index: 90;
+    transform: translateY(-100%); transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1); z-index: 90;
 }
 .fullscreen-menu.open { transform: translateY(0); }
 
@@ -56,7 +43,6 @@ body {
 .fullscreen-menu.open .menu-links li:nth-child(2) { animation-delay: 0.2s; }
 .fullscreen-menu.open .menu-links li:nth-child(3) { animation-delay: 0.3s; }
 .fullscreen-menu.open .menu-links li:nth-child(4) { animation-delay: 0.4s; }
-
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
 .menu-links a {
@@ -69,33 +55,24 @@ body {
 /* ========================= */
 /* HERO (STICKY)             */
 /* ========================= */
-.hero {
-    position: sticky; top: 0; left: 0; width: 100%; height: 100vh;
-    z-index: 1; overflow: hidden;
-}
+.hero { position: sticky; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; overflow: hidden; }
 .hero-content {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    display: flex; align-items: center; padding: 0 5%;
-    transform-origin: center center; will-change: transform, opacity;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center;
+    padding: 0 5%; transform-origin: center center; will-change: transform, opacity;
 }
 .hero-orb {
-    position: absolute; top: 50%; left: 50%; width: 45vw; height: 45vw;
-    min-width: 400px; min-height: 400px;
+    position: absolute; top: 50%; left: 50%; width: 45vw; height: 45vw; min-width: 400px; min-height: 400px;
     background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
     border-radius: 50%; filter: blur(80px); transform: translate(-50%, -50%);
     animation: floatOrb 12s ease-in-out infinite alternate; pointer-events: none;
 }
-@keyframes floatOrb {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    100% { transform: translate(-40%, -60%) scale(1.1); }
-}
+@keyframes floatOrb { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-40%, -60%) scale(1.1); } }
 .hero-text { width: 100%; position: relative; z-index: 2; }
 .hero h1 { font-size: clamp(3.5rem, 9vw, 8.5rem); line-height: 0.8; letter-spacing: -3px; font-weight: 500; }
 .reveal-wrap { display: block; overflow: hidden; }
 .line-left, .line-right { display: block; transform: translateY(110%); animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .line-left { text-align: left; animation-delay: 0.2s; }
 .line-right { text-align: right; animation-delay: 0.4s; color: #e0e0e0; }
-
 @keyframes slideUp { to { transform: translateY(0); } }
 
 /* ========================= */
@@ -109,46 +86,26 @@ body {
 .philosophy-text p { font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.6; color: #ffffff; }
 
 /* ========================= */
-/* HOME WORK GRID (GSAP)     */
+/* HOME WORK GRID            */
 /* ========================= */
 .home-work { padding: 120px 5% 150px; max-width: 1400px; margin: 0 auto; }
-.work-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); 
-    gap: 8rem 2.5rem; align-items: start; perspective: 2000px;
-}
-.work-item { display: flex; flex-direction: column; gap: 1.2rem; cursor: pointer; }
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8rem 2.5rem; align-items: start; }
+.work-item { display: flex; flex-direction: column; gap: 1.2rem; cursor: pointer; position: relative; perspective: 1000px; }
 
-/* Wrapper maintains grid layout space when card detaches */
-.work-card-wrapper {
-    width: 100%; aspect-ratio: 5 / 7; border-radius: 24px;
-}
-
-/* The actual element that GSAP Flips */
 .work-card {
-    width: 100%; height: 100%;
-    background: #ffffff; border-radius: 24px;
-    overflow: hidden; position: relative;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
-    will-change: transform, width, height, top, left;
-    transform-style: preserve-3d;
+    width: 100%; aspect-ratio: 5 / 7; background: #ffffff; border-radius: 24px;
+    overflow: hidden; position: relative; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
 }
 
 .card-hero-img {
     width: 100%; height: 100%; object-fit: cover; display: block;
-    /* Only transition transform for hover, DO NOT transition width/height */
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Hover States (Only apply when NOT expanded) */
-.work-item:hover .work-card:not(.expanded) {
-    transform: translateY(-8px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.15);
-}
-.work-item:hover .card-hero-img:not(.expanded) {
-    transform: scale(1.05);
-}
+.work-item:hover .work-card { box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: translateY(-8px); transition: all 0.4s ease; }
+.work-item:hover .card-hero-img { transform: scale(1.05); }
 
-/* TEXT OUTSIDE CARD */
+/* Text Below Grid */
 .work-info { text-align: left; }
 .work-info h3 { color: #ffffff; font-size: 1.1rem; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 0.3rem; }
 .work-info p { color: #888888; font-size: 0.9rem; font-weight: 400; }
@@ -156,63 +113,44 @@ body {
 .work-action { margin-top: 8rem; display: flex; justify-content: center; }
 .btn-pill {
     display: inline-block; padding: 1.2rem 3rem; border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;
-    font-size: 1.1rem; font-weight: 500; text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; font-size: 1.1rem; font-weight: 500;
+    text-decoration: none; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .btn-pill:hover { background: #ffffff; color: #0b0b0b; transform: scale(1.03); }
 
 /* ========================= */
-/* EXPANDED FLIP STATE       */
+/* GSAP CLONE MODAL STYLES   */
 /* ========================= */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    opacity: 0; pointer-events: none; z-index: 1000;
-    transition: opacity 0.6s ease;
+    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    opacity: 0; pointer-events: none; z-index: 1000; transition: opacity 0.6s ease;
 }
 .modal-overlay.active { opacity: 1; pointer-events: all; }
 
-/* The class toggled by GSAP Flip */
-.work-card.expanded {
-    position: fixed;
-    top: 7.5vh; left: 0; right: 0; margin: 0 auto;
-    width: 90vw; max-width: 1000px; height: 85vh;
-    z-index: 1001; background: #111111;
-    cursor: auto; overflow-y: auto; overflow-x: hidden;
+/* The specific clone that GSAP creates and animates */
+.clone-card {
     border: 1px solid rgba(255,255,255,0.1);
+    transform-style: preserve-3d; /* Allows the 3D twist */
 }
 
-/* Custom Scrollbar */
-.work-card.expanded::-webkit-scrollbar { width: 8px; }
-.work-card.expanded::-webkit-scrollbar-track { background: transparent; }
-.work-card.expanded::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+/* Custom Scrollbar for the Expanded Card */
+.clone-card::-webkit-scrollbar { width: 8px; }
+.clone-card::-webkit-scrollbar-track { background: transparent; }
+.clone-card::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
-/* Image shifts to hero banner on expand */
-.work-card.expanded .card-hero-img {
-    height: 55vh; min-height: 400px;
-    transition: none; /* Let GSAP handle it perfectly */
-    transform: scale(1);
-}
-
+/* Hidden content structures */
+.card-content-hidden { display: none; width: 100%; }
 .close-btn {
-    position: absolute; top: 20px; right: 20px; z-index: 20;
-    width: 40px; height: 40px; border-radius: 50%;
-    background: rgba(0,0,0,0.5); color: #fff; border: none;
-    font-size: 1.2rem; cursor: pointer; backdrop-filter: blur(5px);
-    opacity: 0; pointer-events: none; /* Hidden by default */
-    transition: background 0.3s ease, transform 0.3s ease;
+    position: absolute; top: 20px; right: 20px; z-index: 20; width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(0,0,0,0.5); color: #fff; border: none; font-size: 1.2rem; cursor: pointer;
+    backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: background 0.3s ease, transform 0.3s ease;
 }
 .close-btn:hover { background: #fff; color: #000; transform: scale(1.1); }
-.work-card.expanded .close-btn { opacity: 1; pointer-events: all; }
 
-/* The interior details (hidden originally) */
-.card-content-hidden {
-    display: none; width: 100%;
-}
-.modal-content-inner { padding: 5rem 10%; margin: 0 auto; }
-.modal-content-inner h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 4rem; color: #fff; }
+/* Interior Formatting */
+.modal-content-inner { padding: 5rem 10%; margin: 0 auto; max-width: 900px; }
+.modal-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 4rem; color: #fff; }
 .modal-text-section { margin-bottom: 3rem; }
 .modal-text-section h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
 .modal-text-section p { font-size: 1.2rem; line-height: 1.8; color: #bbb; }
